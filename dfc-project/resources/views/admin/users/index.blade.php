@@ -40,7 +40,8 @@
                 </div>
 
                 <!-- Card 3 -->
-                <div class="flex items-center bg-[#00ABF1] px-4 py-6 rounded-2xl">
+                <!-- Card 3: Tambah Pengguna -->
+                <div onclick="window.location='{{ route('users.create') }}'" class="flex items-center bg-[#00ABF1] px-4 py-6 rounded-2xl cursor-pointer hover:bg-[#0095c8] transition">
                     <div class="flex-shrink-0 mx-2">
                         <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center">
                             <img src="images/plus.png" alt="" class="w-8 h-8">
@@ -72,7 +73,7 @@
                         </svg>
                         Cari
                     </button>
-                </div></svg>
+                </div>
             </div>
             <table class="w-full border-collapse overflow-hidden rounded-xl">
                 <tr class="bg-[#979797] text-white text-center font-regular">

@@ -22,6 +22,22 @@ Route::middleware(['auth','role:analis'])->get('/analis', function () {
     return view('analis.dashboard');
 })->name('analis.dashboard');
 
+Route::middleware(['auth','role:analis'])->get('/analis/dokumen',function(){
+   return view('analis.document');
+})->name('analis.document');
+
+Route::middleware(['auth','role:analis'])->get('/analis/surat-tugas/baru',function(){
+   return view('analis.surattugas.create');
+})->name('analis.surat-tugas');
+
+Route::middleware(['auth','role:analis'])->get('/analis/surat-pengantar/baru',function(){
+   return view('analis.suratpengantar.create');
+})->name('analis.surat-pengantar');
+
+Route::middleware(['auth','role:analis'])->get('/analis/laporan/baru',function(){
+   return view('analis.laporan.create');
+})->name('analis.laporan');
+
 // Dashboard Supervisor
 Route::middleware(['auth','role:supervisor'])->get('/supervisor', function () {
     return view('supervisor.dashboard');

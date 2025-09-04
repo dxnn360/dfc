@@ -10,9 +10,9 @@
             ];
         } elseif(auth()->user()->hasRole('analis')) {
             $menus = [
-                ['label' => 'Dashboard', 'url' => route('dashboard'), 'icon' => 'home'],
-                ['label' => 'Input Kasus', 'url' => '#', 'icon' => 'folder-plus'],
-                ['label' => 'Laporan Saya', 'url' => '#', 'icon' => 'clipboard-document'],
+                ['label' => 'Dashboard', 'url' => route('analis.dashboard'), 'icon' => 'home'],
+                ['label' => 'Dokumen', 'url' => route('analis.document'), 'icon' => 'document-text'],
+                ['label' => 'Pengaturan', 'url' => '#', 'icon' => 'clipboard-document'],
             ];
         } elseif(auth()->user()->hasRole('supervisor')) {
             $menus = [
