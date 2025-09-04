@@ -13,6 +13,18 @@ Route::middleware(['auth','role:admin'])->get('/admin', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
+Route::middleware(['auth','role:admin'])->get('/admin/template/surattugas', function () {
+    return view('admin.template.surattugas');
+})->name('admin.template.surattugas');
+
+Route::middleware(['auth','role:admin'])->get('/admin/template/suratpengantar', function () {
+    return view('admin.template.suratpengantar');
+})->name('admin.template.suratpengantar');
+
+Route::middleware(['auth','role:admin'])->get('/admin/template/laporan', function () {
+    return view('admin.template.laporan');
+})->name('admin.template.laporan');
+
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::resource('users', UserController::class);
 });
@@ -42,6 +54,22 @@ Route::middleware(['auth','role:analis'])->get('/analis/laporan/baru',function()
 Route::middleware(['auth','role:supervisor'])->get('/supervisor', function () {
     return view('supervisor.dashboard');
 })->name('supervisor.dashboard');
+
+Route::middleware(['auth','role:supervisor'])->get('/supervisor/dokumen',function(){
+   return view('supervisor.document');
+})->name('supervisor.document');
+
+Route::middleware(['auth','role:supervisor'])->get('/supervisor/st/approval',function(){
+   return view('supervisor.surattugas');
+})->name('supervisor.surattugas');
+
+Route::middleware(['auth','role:supervisor'])->get('/supervisor/sp/approval',function(){
+   return view('supervisor.suratpengantar');
+})->name('supervisor.suratpengantar');
+
+Route::middleware(['auth','role:supervisor'])->get('/supervisor/lp/approval',function(){
+   return view('supervisor.laporan');
+})->name('supervisor.laporan');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

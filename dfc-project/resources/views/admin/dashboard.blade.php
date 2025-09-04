@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <a href="#" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
+                            <a href="{{ route('admin.template.suratpengantar') }}" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
                                 Template</a>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <a href="#" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
+                            <a href="{{ route('admin.template.laporan') }}" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
                                 Template</a>
                         </div>
                     </div>

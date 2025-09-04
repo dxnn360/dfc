@@ -12,8 +12,8 @@
 
         <!-- Title -->
         <div class="my-6">
-            <h1 class="text-3xl font-semibold mb-3">Buat Laporan Forensik Baru</h1>
-            <p class="text-sm">Silahkan isi data Laporan Forensik sesuai dengan data yang ada!</p>
+            <h1 class="text-3xl font-semibold mb-3">122/BB/DFC/2025</h1>
+            <p class="text-sm">Silahkan dibaca dengan seksama sebelum dokumen diverifikasi oleh Anda</p>
         </div>
 
         <!-- Form + Preview -->
@@ -24,19 +24,19 @@
                     <!-- Informasi Pemeriksaan -->
                     <div class="mb-4">
                         <p class="mb-1 text-[#3C4B64]">Informasi Pemeriksaan</p>
-                        <textarea name="informasi_pemeriksaan" class="rounded-xl border-[#3C4B64] w-full"></textarea>
+                        <textarea name="informasi_pemeriksaan" class="rounded-xl border-[#3C4B64] w-full">dfdfdfdfdfdf</textarea>
                     </div>
 
                     <!-- Nama Pemohon -->
                     <div class="mb-4">
                         <p class="mb-1 text-[#3C4B64]">Nama Pemohon</p>
-                        <input type="text" name="nama_pemohon" class="rounded-full border-[#3C4B64] w-full">
+                        <input type="text" name="nama_pemohon" class="rounded-full border-[#3C4B64] w-full" placeholder="Jane Doe" value="Jane Doe" readonly>
                     </div>
 
                     <!-- Unit Kerja Pemohon -->
                     <div class="mb-4">
                         <p class="mb-1 text-[#3C4B64]">Unit Kerja Pemohon</p>
-                        <input type="text" name="unit_kerja" class="rounded-full border-[#3C4B64] w-full">
+                        <input type="text" name="unit_kerja" class="rounded-full border-[#3C4B64] w-full" placeholder="Kejaksaan Negeri Jakarta" value="Kejaksaan Negeri Jakarta" readonly>
                     </div>
 
                     <!-- Barang Bukti -->
@@ -49,7 +49,7 @@
                         </div>
                         <div id="barang-bukti-wrapper">
                             <div class="flex items-center gap-2 mb-2">
-                                <input type="text" name="barang_bukti[]" placeholder="Masukkan barang bukti" class="rounded-full border-[#3C4B64] w-full">
+                                <input type="text" name="barang_bukti[]" placeholder="Masukkan barang bukti" class="rounded-full border-[#3C4B64] w-full" value="Hardisk Seagate 1TB, USB Kingston 32GB" readonly>
                             </div>
                         </div>
                     </div>
@@ -57,13 +57,13 @@
                     <!-- Tujuan Pemeriksaan -->
                     <div class="mb-4">
                         <p class="mb-1 text-[#3C4B64]">Tujuan Pemeriksaan</p>
-                        <textarea name="tujuan_pemeriksaan" class="rounded-xl border-[#3C4B64] w-full"></textarea>
+                        <textarea name="tujuan_pemeriksaan" class="rounded-xl border-[#3C4B64] w-full">isinya tujuan_pemeriksaan</textarea>
                     </div>
 
                     <!-- Metodologi -->
                     <div class="mb-4">
                         <p class="mb-1 text-[#3C4B64]">Metodologi</p>
-                        <textarea name="metodologi" class="rounded-xl border-[#3C4B64] w-full"></textarea>
+                        <textarea name="metodologi" class="rounded-xl border-[#3C4B64] w-full">isinya metodologi</textarea>
                     </div>
 
                     <!-- Sumber -->
@@ -96,13 +96,13 @@
 
                     <!-- Buttons -->
                     <div class="flex justify-center">
-                        <a href="{{ route('analis.dashboard') }}" 
-                           class="bg-white text-[#C4C4C4] border-2 border-[#C4C4C4] px-8 rounded-full py-2 mt-2 font-bold mr-4 hover:text-gray-900 hover:bg-gray-400">
+                        <a href="{{ route('supervisor.dashboard') }}" 
+                           class="bg-white text-[#C4C4C4] w-full text-center border-2 border-[#C4C4C4] px-8 rounded-full py-2 mt-2 font-bold mr-4 hover:text-gray-900 hover:bg-gray-400">
                            Batalkan
                         </a>
                         <button type="submit" 
-                                class="bg-[#00ABF1] text-white px-8 rounded-full py-2 mt-2 font-bold hover:bg-blue-800">
-                            Preview
+                                class="bg-[#10E653] w-full text-white px-8 rounded-full py-2 mt-2 font-bold hover:bg-blue-800">
+                            Verifikasi
                         </button>
                     </div>
                 </form>
@@ -111,7 +111,7 @@
             <!-- Preview -->
             <div class="flex-1">
                 <div class="bg-white rounded-xl shadow-lg border p-8 h-full flex flex-col items-center">
-                    <h2 class="text-lg font-semibold mb-4">Preview Surat Pengantar (PDF)</h2>
+                    <h2 class="text-lg font-semibold mb-4">Preview Dokumen</h2>
                     <embed id="pdf-preview" src="{{ asset('storage/dummy.pdf') }}" type="application/pdf" width="100%" height="600px" />
                     <p class="text-xs text-gray-400 mt-2">Preview dokumen PDF akan muncul di sini setelah klik Preview.</p>
                 </div>

@@ -16,9 +16,9 @@
             ];
         } elseif(auth()->user()->hasRole('supervisor')) {
             $menus = [
-                ['label' => 'Dashboard', 'url' => route('dashboard'), 'icon' => 'home'],
-                ['label' => 'Verifikasi Laporan', 'url' => '#', 'icon' => 'check-badge'],
-                ['label' => 'Riwayat Kasus', 'url' => '#', 'icon' => 'archive-box'],
+                ['label' => 'Dashboard', 'url' => route('supervisor.dashboard'), 'icon' => 'home'],
+                ['label' => 'Dokumen', 'url' => route('supervisor.document'), 'icon' => 'check-badge'],
+                ['label' => 'Pengaturan', 'url' => '#', 'icon' => 'archive-box'],
             ];
         }
     }
