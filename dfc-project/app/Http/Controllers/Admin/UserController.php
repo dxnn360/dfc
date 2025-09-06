@@ -16,6 +16,12 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function dashboard()
+    {
+        $users = User::with('roles')->orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.dashboard', compact('users'));
+    }
+    
     public function create()
     {
         $roles = Role::all();
@@ -24,55 +30,67 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'     => 'required|string|max:100',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'role'     => 'required|exists:roles,name',
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:100',
+            'last_name'  => 'nullable|string|max:100',
+            'position'   => 'required|string|max:100',
+            'nik'        => 'required|string|max:50|unique:users,nik',
+            'desc'       => 'nullable|string',
+            'email'      => 'required|email|unique:users,email',
+            'role'       => 'required|string|in:admin,analis,supervisor',
+            'password'   => 'required|string|min:6|confirmed',
         ]);
 
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'first_name' => $validated['first_name'],
+            'last_name'  => $validated['last_name'],
+            'position'   => $validated['position'],
+            'nik'        => $validated['nik'],
+            'desc'       => $validated['desc'] ?? null,
+            'name'       => $validated['first_name'] . ' ' . $validated['last_name'],
+            'email'      => $validated['email'],
+            'password'   => Hash::make($validated['password']),
         ]);
 
-        $user->assignRole($request->role);
+        $user->assignRole($validated['role']); // pake spatie
 
-        return redirect()->route('users.index')->with('ok','User berhasil dibuat');
+        return redirect()->route('users.index')->with('success','User berhasil ditambahkan');
     }
 
     public function edit(User $user)
     {
         $roles = Role::all();
-        return view('admin.users.edit', compact('user','roles'));
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name'  => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role'  => 'required|exists:roles,name',
+        $validated = $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6',
+            'role' => 'required|in:admin,analis,supervisor',
+            'first_name' => 'nullable|string|max:100',
+            'last_name' => 'nullable|string|max:100',
+            'position' => 'nullable|string|max:100',
+            'nik' => 'nullable|string|max:50',
+            'desc' => 'nullable|string',
         ]);
 
-        $user->update([
-            'name'  => $request->name,
-            'email' => $request->email,
-        ]);
-
-        if($request->filled('password')){
-            $user->update(['password' => Hash::make($request->password)]);
+        if (!empty($validated['password'])) {
+            $validated['password'] = bcrypt($validated['password']);
+        } else {
+            unset($validated['password']);
         }
 
-        $user->syncRoles($request->role);
+        $user->update($validated);
+        $user->syncRoles([$validated['role']]); // update role
 
-        return redirect()->route('users.index')->with('ok','User berhasil diperbarui');
+        return redirect()->route('users.index')->with('success', 'User berhasil diperbarui!');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return back()->with('ok','User berhasil dihapus');
+        return back()->with('ok', 'User berhasil dihapus');
     }
 }

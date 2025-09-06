@@ -73,7 +73,8 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <a href="#" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
+                            <a href="{{ route('admin.template.surattugas') }}"
+                                class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
                                 Template</a>
                         </div>
                     </div>
@@ -92,7 +93,8 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <a href="{{ route('admin.template.suratpengantar') }}" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
+                            <a href="{{ route('admin.template.suratpengantar') }}"
+                                class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
                                 Template</a>
                         </div>
                     </div>
@@ -111,7 +113,8 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <a href="{{ route('admin.template.laporan') }}" class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
+                            <a href="{{ route('admin.template.laporan') }}"
+                                class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
                                 Template</a>
                         </div>
                     </div>
@@ -123,92 +126,31 @@
                 <h2 class="text-lg mb-4 font-medium">Pengguna Terbaru</h2>
                 <table class="w-full border-collapse overflow-hidden rounded-xl">
                     <thead>
-                        <tr class="bg-[#979797] text-white">
-                            <th class="p-3 text-left">ID</th>
-                            <th class="p-3 text-left">Username</th>
-                            <th class="p-3 text-left">Role</th>
-                            <th class="p-3 text-left">Action</th>
+                        <tr class="bg-[#979797] text-center text-white">
+                            <td class="p-3">ID</td>
+                            <td class="p-3">Username</td>
+                            <td class="p-3">Role</td>
+                            <td class="p-3">Action</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-[#F3F3F3] hover:bg-gray-100 transition">
-                            <td class="p-3">1</td>
-                            <td class="p-3">johndoe</td>
-                            <td class="p-3">Admin</td>
-                            <td class="p-3 flex gap-2">
-                                <button
-                                    class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
-                                    Edit
-                                </button>
-                                <button
-                                    class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#F3F3F3] hover:bg-gray-100 transition">
-                            <td class="p-3">2</td>
-                            <td class="p-3">janedoe</td>
-                            <td class="p-3">Analis</td>
-                            <td class="p-3 flex gap-2">
-                                <button
-                                    class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
-                                    Edit
-                                </button>
-                                <button
-                                    class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr class="bg-[#F3F3F3] hover:bg-gray-100 transition">
-                            <td class="p-3">2</td>
-                            <td class="p-3">janedoe</td>
-                            <td class="p-3">Analis</td>
-                            <td class="p-3 flex gap-2">
-                                <button
-                                    class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
-                                    Edit
-                                </button>
-                                <button
-                                    class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr class="bg-[#F3F3F3] hover:bg-gray-100 transition">
-                            <td class="p-3">2</td>
-                            <td class="p-3">janedoe</td>
-                            <td class="p-3">Analis</td>
-                            <td class="p-3 flex gap-2">
-                                <button
-                                    class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
-                                    Edit
-                                </button>
-                                <button
-                                    class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr class="bg-[#F3F3F3] hover:bg-gray-100 transition">
-                            <td class="p-3">2</td>
-                            <td class="p-3">janedoe</td>
-                            <td class="p-3">Analis</td>
-                            <td class="p-3 flex gap-2">
-                                <button
-                                    class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
-                                    Edit
-                                </button>
-                                <button
-                                    class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
+                        @foreach($users as $u)
+                            <tr class=" bg-[#F3F3F3] text-center hover:bg-gray-100">
+                                <td class="p-2">{{ $loop->iteration + ($users->currentPage() - 1) * $users->perPage() }}
+                                </td>
+                                <td class="p-2">{{ $u->name }}</td>
+                                <td>{{ $u->roles->pluck('name')->implode(', ') }}</td>
+                                <td>
+                                    <a href="{{ route('users.edit', $u) }}"
+                                        class="px-4 mr-2 bg-[#00ABF1] font-medium rounded-full text-white">Edit</a>
+                                    <form method="POST" action="{{ route('users.destroy', $u) }}" style="display:inline">
+                                        @csrf @method('DELETE')
+                                        <button onclick="return confirm('Yakin hapus user ini?')"
+                                            class="px-4 mr-2 bg-[#FF0000] font-medium rounded-full text-white">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 

@@ -9,9 +9,9 @@ Route::get('/', function () {
 });
 
 // Dashboard Admin
-Route::middleware(['auth','role:admin'])->get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+Route::middleware(['auth','role:admin'])
+    ->get('/admin', [UserController::class, 'dashboard'])
+    ->name('admin.dashboard');
 
 Route::middleware(['auth','role:admin'])->get('/admin/template/surattugas', function () {
     return view('admin.template.surattugas');

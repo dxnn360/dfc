@@ -6,13 +6,13 @@
             $menus = [
                 ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'home'],
                 ['label' => 'Pengguna', 'url' => route('users.index'), 'icon' => 'users'],
-                ['label' => 'Pengaturan', 'url' => '#', 'icon' => 'document-text'],
+                ['label' => 'Pengaturan', 'url' => route('profile.edit'), 'icon' => 'document-text'],
             ];
         } elseif(auth()->user()->hasRole('analis')) {
             $menus = [
                 ['label' => 'Dashboard', 'url' => route('analis.dashboard'), 'icon' => 'home'],
                 ['label' => 'Dokumen', 'url' => route('analis.document'), 'icon' => 'document-text'],
-                ['label' => 'Pengaturan', 'url' => '#', 'icon' => 'clipboard-document'],
+                ['label' => 'Pengaturan', 'url' => route('profile.edit'), 'icon' => 'clipboard-document'],
             ];
         } elseif(auth()->user()->hasRole('supervisor')) {
             $menus = [
