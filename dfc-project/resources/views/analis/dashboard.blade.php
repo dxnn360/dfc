@@ -84,9 +84,9 @@
                                 <span class="px-3 py-1 rounded-full bg-[#979797] text-white text-xs">Draft</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.surattugas.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -100,9 +100,9 @@
                                 <span class="px-3 py-1 rounded-full bg-blue-400 text-white text-xs">Proses</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.surattugas.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -116,9 +116,9 @@
                                 <span class="px-3 py-1 rounded-full bg-green-500 text-white text-xs">Selesai</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.surattugas.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -154,9 +154,9 @@
                                 <span class="px-3 py-1 rounded-full bg-[#979797] text-white text-xs">Draft</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.suratpengantar.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -170,9 +170,9 @@
                                 <span class="px-3 py-1 rounded-full bg-blue-400 text-white text-xs">Proses</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.suratpengantar.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -186,9 +186,9 @@
                                 <span class="px-3 py-1 rounded-full bg-green-500 text-white text-xs">Selesai</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.suratpengantar.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -224,9 +224,9 @@
                                 <span class="px-3 py-1 rounded-full bg-[#979797] text-white text-xs">Draft</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.laporan.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -240,9 +240,9 @@
                                 <span class="px-3 py-1 rounded-full bg-blue-400 text-white text-xs">Proses</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.laporan.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>
@@ -256,9 +256,9 @@
                                 <span class="px-3 py-1 rounded-full bg-green-500 text-white text-xs">Selesai</span>
                             </td>
                             <td class="p-3 flex gap-2">
-                                <button class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
+                                <a href="{{ route('analis.laporan.edit') }}" class="px-3 py-1 text-sm bg-[#00ABF1] text-white rounded-full hover:bg-blue-600 transition">
                                     Edit
-                                </button>
+                                </a>
                                 <button class="px-3 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600 transition">
                                     Delete
                                 </button>

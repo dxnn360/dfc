@@ -49,28 +49,10 @@
                           hover:bg-[#00ABF1] 
                           {{ $isActive ? 'bg-[#00ABF1] text-white' : 'text-gray-700' }}">
                     
-                    {{-- Icon selalu tampil --}}
-                    @switch($menu['icon'])
-                        @case('home')
-                            <svg class="w-6 h-6 shrink-0 {{ $isActive ? 'text-white' : 'text-gray-600' }}" 
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                    d="M2.25 12l9.75-9.75L21.75 12M4.5 10.5v9.75h15v-9.75"/>
-                            </svg>
-                            @break
-                        @case('users')
-                            <svg class="w-6 h-6 shrink-0 {{ $isActive ? 'text-white' : 'text-gray-600' }}" 
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                    d="M15 19.128a9.374 9.374 0 01-6 0M12 3a4.5 4.5 0 00-4.5 4.5v.128a9.003 9.003 0 009 0V7.5A4.5 4.5 0 0012 3z"/>
-                            </svg>
-                            @break
-                        @default
-                            <svg class="w-6 h-6 shrink-0 {{ $isActive ? 'text-white' : 'text-gray-600' }}" 
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-                            </svg>
-                    @endswitch
+                    {{-- Icon --}}
+                    <img src="{{ $menu['icon'] }}" 
+                         alt="{{ $menu['label'] }} icon" 
+                         class="w-6 h-6 shrink-0 {{ $isActive ? 'filter brightness-0 invert' : '' }}">
 
                     {{-- Label hanya muncul kalau open --}}
                     <span x-show="open" x-transition class="whitespace-nowrap">

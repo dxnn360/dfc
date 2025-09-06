@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // Dashboard Admin
@@ -42,13 +42,25 @@ Route::middleware(['auth','role:analis'])->get('/analis/surat-tugas/baru',functi
    return view('analis.surattugas.create');
 })->name('analis.surat-tugas');
 
+Route::middleware(['auth','role:analis'])->get('/analis/surat-tugas/edit',function(){
+   return view('analis.surattugas.edit');
+})->name('analis.surattugas.edit');
+
 Route::middleware(['auth','role:analis'])->get('/analis/surat-pengantar/baru',function(){
    return view('analis.suratpengantar.create');
 })->name('analis.surat-pengantar');
 
+Route::middleware(['auth','role:analis'])->get('/analis/surat-pengantar/edit',function(){
+   return view('analis.suratpengantar.edit');
+})->name('analis.suratpengantar.edit');
+
 Route::middleware(['auth','role:analis'])->get('/analis/laporan/baru',function(){
    return view('analis.laporan.create');
 })->name('analis.laporan');
+
+Route::middleware(['auth','role:analis'])->get('/analis/laporan/edit',function(){
+   return view('analis.laporan.edit');
+})->name('analis.laporan.edit');
 
 // Dashboard Supervisor
 Route::middleware(['auth','role:supervisor'])->get('/supervisor', function () {
@@ -72,7 +84,17 @@ Route::middleware(['auth','role:supervisor'])->get('/supervisor/lp/approval',fun
 })->name('supervisor.laporan');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = Auth::user();
+
+    if ($user->hasRole('admin')) {
+        return redirect()->route('admin.dashboard');
+    } elseif ($user->hasRole('analis')) {
+        return redirect()->route('analis.dashboard');
+    } elseif ($user->hasRole('supervisor')) {
+        return redirect()->route('supervisor.dashboard');
+    }
+
+    abort(403, 'Unauthorized');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

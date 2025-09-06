@@ -25,18 +25,18 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-sm mb-1">Nama Depan<span class="text-red-500">*</span></label>
-                        <input type="text" name="first_name" 
-                            placeholder="Contoh: Jean"
-                            class="w-full p-2 border rounded-full @error('first_name') border-red-500 @enderror" required>
+                        <input type="text" name="first_name" placeholder="Contoh: Jean"
+                            class="w-full p-2 border rounded-full @error('first_name') border-red-500 @enderror"
+                            required>
                         @error('first_name')
                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
                         <label class="block text-sm mb-1">Nama Belakang<span class="text-red-500">*</span></label>
-                        <input type="text" name="last_name" 
-                            placeholder="Contoh: Valjean"
-                            class="w-full p-2 border rounded-full @error('last_name') border-red-500 @enderror" required>
+                        <input type="text" name="last_name" placeholder="Contoh: Valjean"
+                            class="w-full p-2 border rounded-full @error('last_name') border-red-500 @enderror"
+                            required>
                         @error('last_name')
                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                         @enderror
@@ -46,8 +46,7 @@
                 <!-- Email -->
                 <div class="mb-4">
                     <label class="block text-sm mb-1">Email<span class="text-red-500">*</span></label>
-                    <input type="email" name="email" 
-                        placeholder="Contoh:@gmail.com"
+                    <input type="email" name="email" placeholder="Contoh:@gmail.com"
                         class="w-full p-2 border rounded-full @error('email') border-red-500 @enderror" required>
                     @error('email')
                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -59,11 +58,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-sm mb-1">Jabatan<span class="text-red-500">*</span></label>
-                        <select name="position" 
+                        <select name="position"
                             class="w-full p-2 border rounded-full @error('position') border-red-500 @enderror" required>
                             <option value="">-- Pilih Jabatan --</option>
                             <option value="analis" {{ old('position') == 'analis' ? 'selected' : '' }}>Analis</option>
-                            <option value="supervisor" {{ old('position') == 'supervisor' ? 'selected' : '' }}>Supervisor</option>
+                            <option value="supervisor" {{ old('position') == 'supervisor' ? 'selected' : '' }}>Supervisor
+                            </option>
                             <option value="manager" {{ old('position') == 'manager' ? 'selected' : '' }}>Manager</option>
                         </select>
                         @error('position')
@@ -72,8 +72,7 @@
                     </div>
                     <div>
                         <label class="block text-sm mb-1">NIK / NIP</label>
-                        <input type="text" name="nik" 
-                            placeholder="Contoh: 1234567890"
+                        <input type="text" name="nik" placeholder="Contoh: 1234567890"
                             class="w-full p-2 border rounded-full @error('nik') border-red-500 @enderror" required>
                         @error('nik')
                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -94,7 +93,8 @@
                 <!-- 4. Role -->
                 <div class="mb-4">
                     <label class="block text-sm mb-1">Role<span class="text-red-500">*</span></label>
-                    <select name="role" class="w-full p-2 border rounded-full @error('role') border-red-500 @enderror" required>
+                    <select name="role" class="w-full p-2 border rounded-full @error('role') border-red-500 @enderror"
+                        required>
                         <option value="">-- Pilih Role --</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                         <option value="analis" {{ old('role') == 'analis' ? 'selected' : '' }}>Analis</option>
@@ -108,7 +108,8 @@
                 <!-- 5. Password -->
                 <div class="mb-4">
                     <label class="block text-sm mb-1">Password</label>
-                    <input type="password" name="password" 
+                    <input type="password" name="password"
+                        placeholder="Tuliskan password dengan kombinasi angka dan huruf"
                         class="w-full p-2 border rounded-full @error('password') border-red-500 @enderror" required>
                     @error('password')
                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -118,14 +119,18 @@
                 <!-- 6. Konfirmasi Password -->
                 <div class="mb-4">
                     <label class="block text-sm mb-1">Konfirmasi Password</label>
-                    <input type="password" name="password_confirmation" 
+                    <input type="password" name="password_confirmation" placeholder="Tuliskan ulang password yang sama"
                         class="w-full p-2 border rounded-full" required>
                 </div>
 
                 <!-- Submit -->
-                <div class="mt-6">
-                    <button type="submit" 
-                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <div class="flex justify-end gap-2 mt-12 mb-4">
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="bg-white text-[#C4C4C4]  text-center border-2 border-[#C4C4C4] px-12 rounded-full py-2 font-bold hover:text-gray-900 hover:bg-gray-400">
+                        Batalkan
+                    </a>
+                    <button type="submit"
+                        class="bg-[#00ABF1] text-white px-12 rounded-full py-2 font-bold hover:bg-blue-700 ">
                         Simpan
                     </button>
                 </div>

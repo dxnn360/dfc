@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>DFC UMP</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/headerdfc.png') }}">
 
     <!-- Fonts (ganti Figtree → Poppins kalau mau default Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">

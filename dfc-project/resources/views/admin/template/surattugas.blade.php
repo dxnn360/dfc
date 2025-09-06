@@ -106,12 +106,12 @@
 
 
                         <div class="flex justify-center gap-4 mt-auto">
-                            <a href="{{ route('supervisor.dashboard') }}"
+                            <a href="{{ route('admin.dashboard') }}"
                                 class="bg-white text-[#C4C4C4] w-full text-center border-2 border-[#C4C4C4] px-8 rounded-full py-2 font-bold hover:text-gray-900 hover:bg-gray-400">
                                 Batalkan
                             </a>
                             <button type="submit"
-                                class="bg-[#00ABF1] text-white px-8 rounded-full py-2 font-bold hover:bg-green-700 w-full">
+                                class="bg-[#00ABF1] text-white px-8 rounded-full py-2 font-bold hover:bg-blue-700 w-full">
                                 Simpan
                             </button>
                         </div>
