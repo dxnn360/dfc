@@ -26,7 +26,7 @@
         </div>
 
         <!-- Right: Form -->
-        <div class="w-full md:w-1/2 p-8 py-12 md:p-12">
+        <div class="w-full md:w-1/2 p-8 py-12 mx-6 md:p-12">
             <div>
                 {{ $slot }}
             </div>
