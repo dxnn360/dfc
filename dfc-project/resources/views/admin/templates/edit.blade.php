@@ -23,19 +23,22 @@
             <!-- Form -->
             <div class="flex-1">
                 <div class="bg-white rounded-xl shadow-lg border p-8 flex flex-col h-full">
-                    <form method="POST" action="{{ route('templates.update', $template->type) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('templates.update', $template->type) }}"
+                        enctype="multipart/form-data">
                         @csrf
 
                         <!-- Header -->
                         <div class="mb-4">
                             <label class="block mb-1 font-semibold">Header</label>
-                            <textarea id="header" name="header" class="summernote">{{ old('header', $template->header) }}</textarea>
+                            <textarea id="header" name="header"
+                                class="summernote">{{ old('header', $template->header) }}</textarea>
                         </div>
 
                         <!-- Footer -->
                         <div class="mb-4">
                             <label class="block mb-1 font-semibold">Footer</label>
-                            <textarea id="footer" name="footer" class="summernote">{{ old('footer', $template->footer) }}</textarea>
+                            <textarea id="footer" name="footer"
+                                class="summernote">{{ old('footer', $template->footer) }}</textarea>
                         </div>
 
                         <!-- Logo -->
@@ -53,27 +56,31 @@
                         <div class="mb-4">
                             <label class="block mb-1 font-semibold">Format Tanggal</label>
                             <select name="format_tanggal" class="w-full border rounded p-2">
-                                <option value="d/m/Y" {{ $template->format_tanggal == 'd/m/Y' ? 'selected' : '' }}>04/09/2025</option>
-                                <option value="d-m-Y" {{ $template->format_tanggal == 'd-m-Y' ? 'selected' : '' }}>04-09-2025</option>
-                                <option value="d F Y" {{ $template->format_tanggal == 'd F Y' ? 'selected' : '' }}>04 September 2025</option>
-                                <option value="F d, Y" {{ $template->format_tanggal == 'F d, Y' ? 'selected' : '' }}>September 04, 2025</option>
+                                <option value="d/m/Y" {{ $template->format_tanggal == 'd/m/Y' ? 'selected' : '' }}>
+                                    04/09/2025</option>
+                                <option value="d-m-Y" {{ $template->format_tanggal == 'd-m-Y' ? 'selected' : '' }}>
+                                    04-09-2025</option>
+                                <option value="d F Y" {{ $template->format_tanggal == 'd F Y' ? 'selected' : '' }}>04
+                                    September 2025</option>
+                                <option value="F d, Y" {{ $template->format_tanggal == 'F d, Y' ? 'selected' : '' }}>
+                                    September 04, 2025</option>
                             </select>
                         </div>
 
                         <!-- Body -->
                         <div class="mb-4">
                             <label class="block mb-1 font-semibold">Isi Template</label>
-                            <textarea id="body" name="body" class="summernote">{{ old('body', $template->body) }}</textarea>
+                            <textarea id="body" name="body"
+                                class="summernote">{{ old('body', $template->body) }}</textarea>
                         </div>
 
                         <!-- Tombol -->
                         <div class="flex justify-end gap-4 mt-6">
                             <a href="{{ route('admin.dashboard') }}"
-                               class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300">
+                                class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300">
                                 Batal
                             </a>
-                            <button type="submit"
-                                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
                                 Simpan
                             </button>
                         </div>
@@ -99,8 +106,6 @@
 
     <!-- Tambahin library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
@@ -122,10 +127,16 @@
                 tabsize: 2,
                 height: 200,
                 toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['style', ['style']], // h1,h2,h3
+                    ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']], // font color + background color
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link', 'picture']],
-                    ['view', ['codeview']]
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'hr']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
                     onChange: function () {
