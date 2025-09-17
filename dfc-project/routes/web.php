@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\TemplateController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -13,17 +14,12 @@ Route::middleware(['auth','role:admin'])
     ->get('/admin', [UserController::class, 'dashboard'])
     ->name('admin.dashboard');
 
-Route::middleware(['auth','role:admin'])->get('/admin/template/surattugas', function () {
-    return view('admin.template.surattugas');
-})->name('admin.template.surattugas');
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
+    Route::get('/templates/{type}/edit', [TemplateController::class, 'edit'])->name('templates.edit');
+    Route::post('/templates/{type}', [TemplateController::class, 'update'])->name('templates.update');
+});
 
-Route::middleware(['auth','role:admin'])->get('/admin/template/suratpengantar', function () {
-    return view('admin.template.suratpengantar');
-})->name('admin.template.suratpengantar');
-
-Route::middleware(['auth','role:admin'])->get('/admin/template/laporan', function () {
-    return view('admin.template.laporan');
-})->name('admin.template.laporan');
 
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::resource('users', UserController::class);
