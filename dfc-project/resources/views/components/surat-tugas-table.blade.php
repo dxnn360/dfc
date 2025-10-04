@@ -1,161 +1,100 @@
-<div class="overflow-x-auto">
-    <div class="flex justify-between mb-6">
-        <p class="text-md text-gray-800 mt-2">Daftar Surat Tugas</p>
-        <div class="flex-0 flex items-center space-x-2">
-            <input type="text" placeholder="Tulis Nama Pemohon..."
-                class="border border-gray-300 focus:border-[#00ABF1] rounded-full px-4 py-1 outline-none transition duration-150 w-64">
-            <button
-                class="bg-[#00ABF1] hover:bg-[#0095c8] text-white px-4 py-1 rounded-full flex items-center transition duration-150"
-                type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-                </svg>
-                Cari
-            </button>
-        </div>
-    </div>
-    
-    <table class="w-full border-collapse rounded-xl overflow-hidden">
-        <thead>
-            <tr class="bg-[#4E5566] text-white text-center">
-                <th class="p-2">No</th>
-                <th class="p-2">Nomor Surat</th>
-                <th class="p-2">Nama Pemohon</th>
-                <th class="p-2">Tanggal Pengajuan</th>
-                <th class="p-2">Status</th>
-                <th class="p-2">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bg-[#F3F3F3] hover:bg-gray-100 text-center">
-                <td class="p-2">1</td>
-                <td class="p-2">ST/001/2025</td>
-                <td class="p-2">Budi Santoso</td>
-                <td class="p-2">05 Agustus 2025</td>
-                <td class="p-2">
-                    <span class="px-3 py-1 rounded-full bg-gray-500 text-white text-xs">Draft</span>
-                </td>
-                <td class="p-2 flex justify-center gap-2">
-                    <!-- Unduh -->
-                    <button class="px-3 py-1 bg-green-500 text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12v8m0-8l-4 4m4-4l4 4" />
-                        </svg>
-                        Unduh
-                    </button>
-                    <!-- Edit -->
-                    <button class="px-3 py-1 bg-[#00ABF1] text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.112 9.112a2.25 2.25 0 01-.933.567l-4.528 1.131a.75.75 0 01-.927-.927l1.132-4.528a2.25 2.25 0 01.567-.933l9.111-9.112z" />
-                        </svg>
-                        Edit
-                    </button>
-                    <!-- Hapus -->
-                    <button class="px-3 py-1 bg-red-500 text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Hapus
-                    </button>
-                </td>
-            </tr>
+@props(['suratTugas'])
 
-            <tr class="bg-[#F3F3F3] hover:bg-gray-100 text-center">
-                <td class="p-2">2</td>
-                <td class="p-2">ST/002/2025</td>
-                <td class="p-2">Park Jihye</td>
-                <td class="p-2">06 Agustus 2025</td>
-                <td class="p-2">
-                    <span class="px-3 py-1 rounded-full bg-[#7AA6FF] text-white text-xs">Proses</span>
-                </td>
-                <td class="p-2 flex justify-center gap-2">
-                    <!-- Unduh -->
-                    <button class="px-3 py-1 bg-green-500 text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12v8m0-8l-4 4m4-4l4 4" />
-                        </svg>
-                        Unduh
-                    </button>
-                    <!-- Edit -->
-                    <button class="px-3 py-1 bg-[#00ABF1] text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.112 9.112a2.25 2.25 0 01-.933.567l-4.528 1.131a.75.75 0 01-.927-.927l1.132-4.528a2.25 2.25 0 01.567-.933l9.111-9.112z" />
-                        </svg>
-                        Edit
-                    </button>
-                    <!-- Hapus -->
-                    <button class="px-3 py-1 bg-red-500 text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Hapus
-                    </button>
-                </td>
-            </tr>
-
-            <tr class="bg-[#F3F3F3] hover:bg-gray-100 text-center">
-                <td class="p-2">3</td>
-                <td class="p-2">ST/022/2025</td>
-                <td class="p-2">Lee Seokmin</td>
-                <td class="p-2">08 Agustus 2025</td>
-                <td class="p-2">
-                    <span class="px-3 py-1 rounded-full bg-[#7AA6FF] text-white text-xs">Proses</span>
-                </td>
-                <td class="p-2 flex justify-center gap-2">
-                    <!-- Unduh -->
-                    <button class="px-3 py-1 bg-green-500 text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12v8m0-8l-4 4m4-4l4 4" />
-                        </svg>
-                        Unduh
-                    </button>
-                    <!-- Edit -->
-                    <button class="px-3 py-1 bg-[#00ABF1] text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.112 9.112a2.25 2.25 0 01-.933.567l-4.528 1.131a.75.75 0 01-.927-.927l1.132-4.528a2.25 2.25 0 01.567-.933l9.111-9.112z" />
-                        </svg>
-                        Edit
-                    </button>
-                    <!-- Hapus -->
-                    <button class="px-3 py-1 bg-red-500 text-white rounded-full text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Hapus
-                    </button>
-                </td>
-            </tr>
-
-            
-        </tbody>
-    </table>
-
-    <div class="flex justify-end mt-4">
-        <div class="flex items-center space-x-4">
-            <div class="inline-flex">
-                
-                <!-- Previous Page -->
-                <span class="px-3 py-1 bg-white border border-[#C4C9D0] text-[#8A93A2] rounded-l cursor-not-allowed">&lt;</span>
-
-                <!-- Page Numbers -->
-                <span class="px-3 py-1 bg-[#00ABF1] border border-[#266AFD] text-white">1</span>
-                <a href="#" class="px-3 py-1 bg-white border border-[#C4C9D0] text-[#8A93A2] hover:bg-gray-300">2</a>
-
-                <!-- Next Page -->
-                <a href="#" class="px-3 py-1 bg-white border border-[#C4C9D0] text-[#8A93A2] rounded-r hover:bg-[#0095c8]">&gt;</a>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="border-b border-gray-200">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between px-6 py-4">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800">Surat Tugas</h2>
+                <p class="text-gray-600 text-sm mt-1">Dokumen surat tugas terbaru</p>
             </div>
         </div>
-
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor
+                        Surat</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
+                        Pemohon</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
+                    </th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse($suratTugas as $index => $doc)
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $index + 1 }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{ $doc->nomor_surat ?? '-' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $doc->nama_pemohon ?? '-' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($doc->status === 'draft')
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Draft</span>
+                            @elseif($doc->status === 'pending')
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Proses</span>
+                            @elseif($doc->status === 'approved')
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Selesai</span>
+                            @else
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">Ditolak</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('analis.surat_tugas.download', $doc) }}"
+                                    class="text-blue-600 hover:text-blue-900 transition-colors duration-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <a href="{{ route('analis.surat_tugas.edit', $doc) }}"
+                                    class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <form action="{{ route('analis.surat_tugas.destroy', $doc) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus surat tugas ini?')" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                                <p>Belum ada data surat tugas</p>
+                            </div>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>

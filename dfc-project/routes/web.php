@@ -1,17 +1,27 @@
 <?php
 
+use App\Http\Controllers\AnalisDocumentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Analis\SuratTugasController;
+use App\Http\Controllers\AnalisDashboardController;
+use App\Http\Controllers\SuratPengantarController;
+use App\Http\Controllers\LaporanPenyelidikanController;
+use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\DocumentController;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 // Dashboard Admin
-Route::middleware(['auth','role:admin'])
-    ->get('/admin', [UserController::class, 'dashboard'])
+Route::middleware(['auth', 'role:admin'])
+    ->get('/admin', [AdminDashboardController::class, 'index'])
     ->name('admin.dashboard');
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
@@ -21,63 +31,65 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth','role:admin'])->group(function(){
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
 });
 
 // Dashboard Analis
-Route::middleware(['auth','role:analis'])->get('/analis', function () {
-    return view('analis.dashboard');
-})->name('analis.dashboard');
+Route::middleware(['auth', 'role:analis'])->prefix('analis')->name('analis.')->group(function () {
+    Route::get('/', [AnalisDashboardController::class, 'index'])->name('dashboard');
+});
 
-Route::middleware(['auth','role:analis'])->get('/analis/dokumen',function(){
-   return view('analis.document');
-})->name('analis.document');
+Route::prefix('analis')->middleware(['auth','role:analis'])->group(function () {
+    Route::get('/dokumen', [AnalisDocumentController::class, 'document'])->name('analis.document');
+});
 
-Route::middleware(['auth','role:analis'])->get('/analis/surat-tugas/baru',function(){
-   return view('analis.surattugas.create');
-})->name('analis.surat-tugas');
+Route::prefix('analis')->name('analis.')->group(function () {
+    Route::resource('surat_tugas', SuratTugasController::class)->parameters(['surat_tugas' => 'surat_tugas']);
+    Route::get('surat_tugas/{surat_tugas}/download', [SuratTugasController::class, 'download'])->name('surat_tugas.download');
+});
 
-Route::middleware(['auth','role:analis'])->get('/analis/surat-tugas/edit',function(){
-   return view('analis.surattugas.edit');
-})->name('analis.surattugas.edit');
+Route::prefix('analis')->name('analis.')->group(function () {
+    Route::resource('surat_pengantar', SuratPengantarController::class);
+    Route::get('surat_pengantar/{surat_pengantar}/download', [SuratPengantarController::class, 'download'])
+        ->name('surat_pengantar.download');
+});
 
-Route::middleware(['auth','role:analis'])->get('/analis/surat-pengantar/baru',function(){
-   return view('analis.suratpengantar.create');
-})->name('analis.surat-pengantar');
+Route::prefix('analis')->name('analis.')->group(function () {
+    Route::resource('laporan', LaporanPenyelidikanController::class);
+    Route::get('laporan/{laporan}/download', [LaporanPenyelidikanController::class, 'download'])
+        ->name('laporan.download');
+});
 
-Route::middleware(['auth','role:analis'])->get('/analis/surat-pengantar/edit',function(){
-   return view('analis.suratpengantar.edit');
-})->name('analis.suratpengantar.edit');
+// Dashboard supervisor
+Route::prefix('supervisor')->middleware(['auth', 'role:supervisor'])->group(function () {
 
-Route::middleware(['auth','role:analis'])->get('/analis/laporan/baru',function(){
-   return view('analis.laporan.create');
-})->name('analis.laporan');
+    // Dashboard
+    Route::get('/dashboard', [SupervisorController::class, 'dashboard'])->name('supervisor.dashboard');
 
-Route::middleware(['auth','role:analis'])->get('/analis/laporan/edit',function(){
-   return view('analis.laporan.edit');
-})->name('analis.laporan.edit');
+    // Surat Tugas
+    Route::get('surat-tugas/{id}/detail', [SupervisorController::class, 'detailSuratTugas'])->name('supervisor.surat-tugas.detail');
+    Route::get('surat-tugas/{id}/pdf', [SupervisorController::class, 'previewPdfSuratTugas'])->name('supervisor.surat-tugas.pdf');
+    Route::post('surat-tugas/{id}/approve', [SupervisorController::class, 'approveSuratTugas'])->name('supervisor.surat-tugas.approve');
+    Route::post('surat-tugas/{id}/reject', [SupervisorController::class, 'rejectSuratTugas'])->name('supervisor.surat-tugas.reject');
 
-// Dashboard Supervisor
-Route::middleware(['auth','role:supervisor'])->get('/supervisor', function () {
-    return view('supervisor.dashboard');
-})->name('supervisor.dashboard');
+    // Surat Pengantar
+    Route::get('surat-pengantar/{id}/detail', [SupervisorController::class, 'detailSuratPengantar'])->name('supervisor.surat-pengantar.detail');
+    Route::get('surat-pengantar/{id}/pdf', [SupervisorController::class, 'previewPdfSuratPengantar'])->name('supervisor.surat-pengantar.pdf');
+    Route::post('surat-pengantar/{id}/approve', [SupervisorController::class, 'approveSuratPengantar'])->name('supervisor.surat-pengantar.approve');
+    Route::post('surat-pengantar/{id}/reject', [SupervisorController::class, 'rejectSuratPengantar'])->name('supervisor.surat-pengantar.reject');
 
-Route::middleware(['auth','role:supervisor'])->get('/supervisor/dokumen',function(){
-   return view('supervisor.document');
-})->name('supervisor.document');
+    // Laporan Penyelidikan
+    Route::get('laporan/{id}/detail', [SupervisorController::class, 'detailLaporan'])->name('supervisor.laporan.detail');
+    Route::get('laporan/{id}/pdf', [SupervisorController::class, 'previewPdfLaporan'])->name('supervisor.laporan.pdf');
+    Route::post('laporan/{id}/approve', [SupervisorController::class, 'approveLaporan'])->name('supervisor.laporan.approve');
+    Route::post('laporan/{id}/reject', [SupervisorController::class, 'rejectLaporan'])->name('supervisor.laporan.reject');
+});
 
-Route::middleware(['auth','role:supervisor'])->get('/supervisor/st/approval',function(){
-   return view('supervisor.surattugas');
-})->name('supervisor.surattugas');
+Route::prefix('supervisor')->middleware(['auth','role:supervisor'])->group(function () {
+    Route::get('/documents', [DocumentController::class, 'index'])->name('supervisor.document');
+});
 
-Route::middleware(['auth','role:supervisor'])->get('/supervisor/sp/approval',function(){
-   return view('supervisor.suratpengantar');
-})->name('supervisor.suratpengantar');
-
-Route::middleware(['auth','role:supervisor'])->get('/supervisor/lp/approval',function(){
-   return view('supervisor.laporan');
-})->name('supervisor.laporan');
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
@@ -99,4 +111,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

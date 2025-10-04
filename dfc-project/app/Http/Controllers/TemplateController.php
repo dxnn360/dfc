@@ -19,32 +19,30 @@ class TemplateController extends Controller
 
         $placeholders = match ($type) {
             'surat_tugas' => [
-                '[NAMA_AHLI]' => 'Nama Ahli',
-                '[JABATAN]' => 'Jabatan',
-                '[NIP_NIK]' => 'NIP/NIK',
-                '[NO_SURAT]' => 'Nomor Surat',
-                '[TANGGAL]' => 'Tanggal',
-                '[SUMBER]' => 'Sumber Permintaan',
-                '[RINGKASAN]' => 'Ringkasan Kasus',
+                '{{daftar_ahli}}' => 'Nama Ahli',
+                '{{nomor_surat}}' => 'Nomor Surat',
+                '{{tanggal}}' => 'Tanggal',
+                '{{sumber}}' => 'Sumber Permintaan',
+                '{{ringkasan}}' => 'Ringkasan Kasus',
             ],
             'surat_pengantar' => [
-                '[NO_SURAT]' => 'Nomor Surat Pemeriksaan',
-                '[TANGGAL]' => 'Tanggal',
-                '[DATA_PEMOHON]' => 'Data Pemohon',
-                '[NO_SURAT_PERMINTAAN]' => 'Nomor Surat Permintaan',
-                '[KLASIFIKASI]' => 'Klasifikasi Surat',
-                '[BARANG_BUKTI]' => 'Barang Bukti',
+                '{{nomor_surat}}' => 'Nomor Surat Pemeriksaan',
+                '{{tanggal}}' => 'Tanggal',
+                '{{nama_pemohon}}' => 'Nama Pemohon',
+                '{{jabatan_pemohon}}' => 'Jabatan Pemohon',
+                '{{klasifikasi}}' => 'Klasifikasi Surat',
+                '{{barang_bukti}}' => 'Barang Bukti',
             ],
             'laporan_penyelidikan' => [
-                '[INFO]' => 'Informasi Pemeriksaan',
-                '[NAMA_PEMOHON]' => 'Nama Pemohon',
-                '[UNIT_KERJA]' => 'Unit Kerja Pemohon',
-                '[BARANG_BUKTI]' => 'Barang Bukti',
-                '[TUJUAN]' => 'Tujuan Pemeriksaan',
-                '[METODOLOGI]' => 'Metodologi',
-                '[SUMBER]' => 'Sumber',
-                '[HASIL]' => 'Hasil Pemeriksaan',
-                '[KESIMPULAN]' => 'Kesimpulan',
+                '{{info}}' => 'Informasi Pemeriksaan',
+                '{{nama_pemohon}}' => 'Nama Pemohon',
+                '{{jabatan_pemohon}}' => 'Unit Kerja Pemohon',
+                '{{barang_bukti}}' => 'Barang Bukti',
+                '{{tujuan}}' => 'Tujuan Pemeriksaan',
+                '{{metodologi}}' => 'Metodologi',
+                '{{sumber}}' => 'Sumber',
+                '{{hasil}}' => 'Hasil Pemeriksaan',
+                '{{kesimpulan}}' => 'Kesimpulan',
             ],
             default => []
         };
@@ -57,20 +55,22 @@ class TemplateController extends Controller
         $template = DocumentTemplate::firstOrCreate(['type' => $type]);
 
         $template->update([
+            'header' => $request->header,   // tambahin ini
+            'footer' => $request->footer,   // tambahin ini
             'format_tanggal' => $request->format_tanggal,
-            'nomor_format'   => $request->nomor_format,
-            'body'           => $request->body,
+            'nomor_format' => $request->nomor_format,
+            'body' => $request->body,
         ]);
 
-        // upload file opsional
-        foreach (['header', 'footer', 'logo'] as $field) {
-            if ($request->hasFile($field)) {
-                $path = $request->file($field)->store('templates', 'public');
-                $template->update([$field => $path]);
-            }
+        // khusus untuk logo yang memang file
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('templates', 'public');
+            $template->update(['logo' => $path]);
         }
 
-        return redirect()->route('templates.index')->with('success', 'Template berhasil diperbarui!');
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Template berhasil diperbarui!');
     }
+
 }
 

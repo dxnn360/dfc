@@ -1,139 +1,154 @@
 @props(['menus' => []])
 
-<div x-data="{ open: false }" class="bg-white min-h-screen overflow-x-hidden">
-    <!-- Toggle Button for Small/Medium Screens (Fixed Position) -->
+<div x-data="{ 
+    open: window.innerWidth >= 1024,
+    isDesktop: window.innerWidth >= 1024
+}" class="bg-gray-50 min-h-screen">
+    <!-- Mobile Toggle Button -->
     <button 
+        x-show="!isDesktop"
         @click="open = !open"
-        class="fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border md:hidden hover:bg-gray-50"
+        class="fixed top-6 left-6 z-50 p-3 bg-white rounded-xl shadow-lg border-0 hover:shadow-xl transition-all duration-300 group"
     >
-        <svg xmlns="http://www.w3.org/2000/svg" 
-             fill="none" viewBox="0 0 24 24" 
-             stroke-width="1.5" stroke="currentColor" 
-             class="w-6 h-6 text-gray-700">
-          <path stroke-linecap="round" stroke-linejoin="round" 
-                d="M3.75 5.25h16.5m-16.5 6.75h16.5m-16.5 6.75h16.5" />
-        </svg>
+        <div class="relative w-6 h-6">
+            <span :class="[
+                'absolute left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300',
+                open ? 'top-3 rotate-45' : 'top-2'
+            ]"></span>
+            <span :class="[
+                'absolute left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300',
+                open ? 'opacity-0' : 'top-3 opacity-100'
+            ]"></span>
+            <span :class="[
+                'absolute left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300',
+                open ? 'top-3 -rotate-45' : 'top-4'
+            ]"></span>
+        </div>
     </button>
 
-    <!-- Overlay (mobile and tablet) -->
+    <!-- Overlay -->
     <div 
-        x-show="open"
+        x-show="open && !isDesktop"
         @click="open = false"
-        x-transition:enter="transition-opacity ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition-opacity ease-in duration-300"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-black/50 z-30 md:hidden"
+        class="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 md:hidden transition-opacity duration-300"
     ></div>
 
     <!-- Sidebar -->
     <aside 
-        x-show="open || window.innerWidth >= 1024"
-        x-init="
-            $watch('open', value => {
-                if (window.innerWidth >= 1024) {
-                    open = true;
-                }
-            });
-            window.addEventListener('resize', () => {
-                if (window.innerWidth >= 1024) {
-                    open = true;
-                } else if (window.innerWidth < 768) {
-                    // Keep current state for mobile
-                }
-            });
-            if (window.innerWidth >= 1024) {
-                open = true;
-            }
-        "
+        x-show="open || isDesktop"
         :class="{
-            'w-64': open && window.innerWidth >= 1024, 
-            'w-20': !open && window.innerWidth >= 1024,
-            'w-64': window.innerWidth < 1024
+            'w-72': open,
+            'w-20': !open && isDesktop
         }"
-        x-transition:enter="transition-transform ease-out duration-300"
-        x-transition:enter-start="-translate-x-full"
-        x-transition:enter-end="translate-x-0"
-        x-transition:leave="transition-transform ease-in duration-300"
-        x-transition:leave-start="translate-x-0"
-        x-transition:leave-end="-translate-x-full"
-        class="fixed top-0 left-0 h-full bg-white text-black flex flex-col shadow-xl z-40"
+        class="fixed top-0 left-0 h-full bg-white border-r border-gray-100 flex flex-col shadow-xl z-40 transition-all duration-300"
     >
         <!-- Header -->
-        <div class="flex items-center justify-between px-4 pt-4 pb-2">
-            <span x-show="open || window.innerWidth < 1024" x-transition class="text-lg font-bold">
-                <img src="/images/login.png" alt="Logo" class="w-32 md:w-40 h-auto mx-auto">
-            </span>
+        <div class="flex items-center p-6 pb-4 border-b border-gray-100">
+            <div class="flex items-center gap-3" :class="{ 'justify-center w-full': !open && isDesktop }">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                    <img src="/images/login.png" alt="Logo" class="w-6 h-6 filter brightness-0 invert">
+                </div>
+                <div x-show="open" class="flex-1">
+                    <h1 class="font-bold text-gray-900">Forensic Lab</h1>
+                    <p class="text-sm text-gray-500">Analyst Dashboard</p>
+                </div>
+            </div>
             
-            <!-- Toggle button (visible on desktop only) -->
+            <!-- Desktop Toggle -->
             <button 
+                x-show="isDesktop"
                 @click="open = !open"
-                class="p-2 rounded hover:bg-gray-200 hidden lg:block"
+                class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                     fill="none" viewBox="0 0 24 24" 
-                     stroke-width="1.5" stroke="currentColor" 
-                     class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" 
-                        d="M3.75 5.25h16.5m-16.5 6.75h16.5m-16.5 6.75h16.5" />
-                </svg>
-            </button>
-
-            <!-- Close button (visible on mobile/tablet only) -->
-            <button 
-                @click="open = false"
-                class="p-2 rounded hover:bg-gray-200 lg:hidden"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                     fill="none" viewBox="0 0 24 24" 
-                     stroke-width="1.5" stroke="currentColor" 
-                     class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" 
-                        d="M6 18L18 6M6 6l12 12" />
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          :d="open ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'"/>
                 </svg>
             </button>
         </div>
 
-        <!-- Menu -->
-        <nav class="flex-1 px-3 space-y-2 py-4 overflow-y-auto">
+        <!-- User Info -->
+        <div x-show="open" class="px-4 py-3 mx-3 my-4 bg-blue-50 rounded-xl border border-blue-100">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                    {{ substr(auth()->user()->name, 0, 2) }}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="font-semibold text-gray-900 text-sm truncate">{{ auth()->user()->name }}</p>
+                    <p class="text-gray-500 text-xs">Forensic Analyst</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 px-3 space-y-1 py-4">
             @foreach($menus as $menu)
                 @php
                     $isActive = request()->fullUrlIs(url($menu['url'])) || request()->is(ltrim($menu['url'], '/').'*');
+                $isHover = false;
                 @endphp
 
-                <a href="{{ $menu['url'] }}" 
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl transition 
-                          hover:bg-[#00ABF1] hover:text-white
-                          {{ $isActive ? 'bg-[#00ABF1] text-white' : 'text-gray-700' }}">
-                    
-                    {{-- Icon --}}
-                    <img src="{{ $menu['icon'] }}" 
-                         alt="{{ $menu['label'] }} icon" 
-                         class="w-6 h-6 shrink-0 {{ $isActive ? 'filter brightness-0 invert' : '' }} hover-invert">
+                <a 
+                    href="{{ $menu['url'] }}" 
+                    class="group relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200
+                           {{ $isActive ? 
+                               'bg-blue-500 text-white shadow-lg shadow-blue-500/25' : 
+                               'text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-md hover:border hover:border-gray-100'
+                           }}"
+                    :class="{ 'justify-center': !open && isDesktop }"
+                    x-data="{ isHover: false }"
+                    @mouseenter="isHover = true"
+                    @mouseleave="isHover = false"
+                >
+                    <!-- Active Indicator -->
+                    <div x-show="{{ $isActive ? 'true' : 'false' }} && open" class="absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-blue-500 rounded-full"></div>
 
-                    {{-- Label --}}
-                    <span x-show="open || window.innerWidth < 1024" x-transition class="whitespace-nowrap">
+                    <!-- Icon -->
+                    <div class="relative flex-shrink-0">
+                        <div class="{{ $isActive ? 
+                            'bg-white/20 p-2 rounded-lg' : 
+                            'bg-gray-100 group-hover:bg-blue-100 p-2 rounded-lg transition-colors duration-200'
+                        }}">
+                            <img src="{{ $menu['icon'] }}" 
+                                 alt="{{ $menu['label'] }}" 
+                                 class="w-5 h-5 {{ $isActive ? 
+                                     'filter brightness-0 invert' : 
+                                     'group-hover:filter group-hover:brightness-0 group-hover:invert transition-all duration-200'
+                                 }}">
+                        </div>
+                    </div>
+
+                    <!-- Label -->
+                    <span x-show="open" class="font-medium whitespace-nowrap transition-all duration-200">
                         {{ $menu['label'] }}
                     </span>
+
+                    <!-- Tooltip for collapsed state -->
+                    <div x-show="!open && isDesktop && isHover" 
+                         class="absolute left-full ml-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap z-50 shadow-xl">
+                        {{ $menu['label'] }}
+                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
                 </a>
             @endforeach
         </nav>
 
-        <!-- Logout (selalu di bawah) -->
-        <div class="p-4 mt-auto">
+        <!-- Logout Section -->
+        <div class="p-4 border-t border-gray-100">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" 
-                        class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-red-600 text-white hover:bg-red-700 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                              d="M18 12H9m9 0l-3-3m3 3l-3 3"/>
-                    </svg>
-                    <span x-show="open || window.innerWidth < 1024" x-transition>Logout</span>
+                <button 
+                    type="submit" 
+                    class="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all duration-200 group"
+                    :class="{ 'justify-center': !open && isDesktop }"
+                >
+                    <div class="p-2 rounded-lg bg-gray-100 group-hover:bg-red-100 transition-colors duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                    </div>
+                    <span x-show="open" class="font-medium">Logout</span>
                 </button>
             </form>
         </div>
@@ -142,24 +157,40 @@
     <!-- Main Content -->
     <main 
         :class="{
-            'ml-64': (open || window.innerWidth < 1024) && window.innerWidth >= 1024,
-            'ml-20': !open && window.innerWidth >= 1024,
-            'ml-0': window.innerWidth < 1024
+            'ml-72': open && isDesktop,
+            'ml-20': !open && isDesktop,
+            'ml-0': !isDesktop
         }"
-        class="transition-all duration-300 min-h-screen"
+        class="transition-all duration-300 min-h-screen bg-gradient-to-br from-white to-gray-50/50"
     >
-        <!-- Content padding for mobile toggle button -->
-        <div class="pt-16 md:pt-0">
+        <div class="p-6 pt-20 md:pt-6">
             {{ $slot }}
         </div>
     </main>
 </div>
 
 <style>
-.hover-invert {
-    transition: filter 0.3s ease;
+/* Custom scrollbar */
+aside nav::-webkit-scrollbar {
+    width: 4px;
 }
-a:hover .hover-invert {
-    filter: brightness(0) invert(1);
+
+aside nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+aside nav::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+aside nav::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+}
+
+/* Smooth transitions */
+* {
+    transition-property: color, background-color, border-color, transform, box-shadow;
+    transition-duration: 200ms;
 }
 </style>

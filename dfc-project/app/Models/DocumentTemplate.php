@@ -14,5 +14,6 @@ class DocumentTemplate extends Model
         'format_tanggal',
         'nomor_format',
         'body',
+        'updated_at',
     ];
 }

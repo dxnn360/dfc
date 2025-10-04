@@ -34,37 +34,58 @@
                         <span class="text-xl">+</span> Tambah Surat Tugas
                     </a>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="flex items-center bg-[#979797] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/doc.png" alt="" class="w-8 h-8">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Proses Card -->
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/process.png') }}" alt="Proses" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $stProsesCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Dalam Proses</h3>
+                            </div>
                         </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">3</p>
-                            <h3 class="text-lg">Draft</h3>
-                        </div>
-                    </div>
-                    <div class="flex items-center bg-[#A2C1FF] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/process.png" alt="" class="w-8 h-8">
-                        </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">10</p>
-                            <h3 class="text-lg">Proses</h3>
+                        <div class="mt-4 text-blue-100 text-sm">
+                            Dokumen yang sedang diproses
                         </div>
                     </div>
-                    <div class="flex items-center bg-[#00E548] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/verify.png" alt="" class="w-8 h-8">
+
+                    <!-- Verification Card -->
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/verify.png') }}" alt="Verifikasi" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $stCompletedCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Terverifikasi</h3>
+                            </div>
                         </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">5</p>
-                            <h3 class="text-lg">Verification</h3>
+                        <div class="mt-4 text-green-100 text-sm">
+                            Dokumen yang sudah selesai
+                        </div>
+                    </div>
+
+                    <!-- Revision Card -->
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/doc.png') }}" alt="Revisi" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $stRejectedCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Perlu Revisi</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-red-100 text-sm">
+                            Dokumen yang memerlukan perbaikan
                         </div>
                     </div>
                 </div>
                 <div class="mt-6">
-                    <x-surat-tugas-table />
+                    <x-surat-tugas-table :suratTugas="$suratTugas" />
                 </div>
             </div>
 
@@ -76,37 +97,58 @@
                         <span class="text-xl">+</span> Tambah Surat Pengantar
                     </a>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="flex items-center bg-[#979797] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/doc.png" alt="" class="w-8 h-8">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Proses Card -->
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/process.png') }}" alt="Proses" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $srProsesCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Dalam Proses</h3>
+                            </div>
                         </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">7</p>
-                            <h3 class="text-lg">Draft</h3>
-                        </div>
-                    </div>
-                    <div class="flex items-center bg-[#A2C1FF] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/process.png" alt="" class="w-8 h-8">
-                        </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">20</p>
-                            <h3 class="text-lg">Proses</h3>
+                        <div class="mt-4 text-blue-100 text-sm">
+                            Dokumen yang sedang diproses
                         </div>
                     </div>
-                    <div class="flex items-center bg-[#00E548] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/verify.png" alt="" class="w-8 h-8">
+
+                    <!-- Verification Card -->
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/verify.png') }}" alt="Verifikasi" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $srCompletedCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Terverifikasi</h3>
+                            </div>
                         </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">12</p>
-                            <h3 class="text-lg">Verification</h3>
+                        <div class="mt-4 text-green-100 text-sm">
+                            Dokumen yang sudah selesai
+                        </div>
+                    </div>
+
+                    <!-- Revision Card -->
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/doc.png') }}" alt="Revisi" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $srRejectedCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Perlu Revisi</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-red-100 text-sm">
+                            Dokumen yang memerlukan perbaikan
                         </div>
                     </div>
                 </div>
                 <div class="mt-6">
-                    <x-surat-pengantar-table />
+                    <x-surat-pengantar-table :suratPengantar="$suratPengantar" />
                 </div>
             </div>
 
@@ -118,37 +160,58 @@
                         <span class="text-xl">+</span> Tambah Laporan Pemeriksaan
                     </a>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="flex items-center bg-[#979797] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/doc.png" alt="" class="w-8 h-8">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Proses Card -->
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/process.png') }}" alt="Proses" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $lpProsesCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Dalam Proses</h3>
+                            </div>
                         </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">2</p>
-                            <h3 class="text-lg">Draft</h3>
-                        </div>
-                    </div>
-                    <div class="flex items-center bg-[#A2C1FF] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/process.png" alt="" class="w-8 h-8">
-                        </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">15</p>
-                            <h3 class="text-lg">Proses</h3>
+                        <div class="mt-4 text-blue-100 text-sm">
+                            Dokumen yang sedang diproses
                         </div>
                     </div>
-                    <div class="flex items-center bg-[#00E548] px-4 py-6 rounded-2xl shadow">
-                        <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center shadow">
-                            <img src="/images/verify.png" alt="" class="w-8 h-8">
+
+                    <!-- Verification Card -->
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/verify.png') }}" alt="Verifikasi" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $lpCompletedCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Terverifikasi</h3>
+                            </div>
                         </div>
-                        <div class="ml-4 text-white">
-                            <p class="text-2xl font-bold">8</p>
-                            <h3 class="text-lg">Verification</h3>
+                        <div class="mt-4 text-green-100 text-sm">
+                            Dokumen yang sudah selesai
+                        </div>
+                    </div>
+
+                    <!-- Revision Card -->
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white bg-opacity-20 rounded-2xl w-16 h-16 flex items-center justify-center mr-4">
+                                <img src="{{ asset('images/doc.png') }}" alt="Revisi" class="w-8 h-8">
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold">{{ $lpRejectedCount ?? 0 }}</p>
+                                <h3 class="text-lg font-semibold">Perlu Revisi</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-red-100 text-sm">
+                            Dokumen yang memerlukan perbaikan
                         </div>
                     </div>
                 </div>
                 <div class="mt-6">
-                    <x-laporan-pemeriksaan-table />
+                    <x-laporan-pemeriksaan-table :laporan="$laporan" />
                 </div>
             </div>
         </div>

@@ -1,3 +1,22 @@
+@php
+    use Carbon\Carbon;
+
+    $templateInfo = [
+        'surat_tugas' => [
+            'title' => 'Surat Tugas Digital',
+            'icon' => 'images/Docs.png'
+        ],
+        'surat_pengantar' => [
+            'title' => 'Surat Pengantar Digital',
+            'icon' => 'images/Docs.png'
+        ],
+        'laporan_penyelidikan' => [
+            'title' => 'Laporan Penyelidikan Digital',
+            'icon' => 'images/Docs.png'
+        ],
+    ];
+@endphp
+
 <x-app-layout>
     <div class="mr-8">
         <div class="flex justify-between">
@@ -58,67 +77,37 @@
             <!-- Bagian Template Dokumen -->
             <div class="flex-none w-full md:w-1/2">
                 <h2 class="text-xl mb-4 font-medium">Template Dokumen</h2>
-                <div class="grid grid-cols-1 gap-6">
-                    <!-- Template Card 1 -->
-                    <div class="bg-[#00ABF1] flex-row rounded-2xl shadow-md p-4">
-                        <div class="flex mt-4 mb-8">
-                            <div class="flex-shrink-0 mx-2">
-                                <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center">
-                                    <img src="images/Docs.png" alt="" class="w-8 h-8">
+                <div class="grid grid-rows-1 md:grid-rows-3 gap-6">
+                    @foreach ($templateInfo as $type => $info)
+                        <div class="bg-[#00ABF1] flex-row rounded-2xl shadow-md p-4">
+                            <div class="flex mt-4 mb-8">
+                                <div class="flex-shrink-0 mx-2">
+                                    <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center">
+                                        <img src="{{ asset($info['icon']) }}" alt="" class="w-8 h-8">
+                                    </div>
+                                </div>
+                                <div class="ml-4 text-white">
+                                    <h3 class="text-2xl font-semibold">{{ $info['title'] }}</h3>
+                                    <p class="text-md">
+                                        Terakhir Diperbarui :
+                                        @if(isset($templates[$type]))
+                                            {{ Carbon::parse($templates[$type]->updated_at)->translatedFormat('d F Y H:i') }}
+                                        @else
+                                            Belum Pernah
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
-                            <div class="ml-4 text-white">
-                                <h3 class="text-2xl font-semibold">Surat Tugas Digital</h3>
-                                <p class="text-md">Terakhir Diperbarui : 21 Agustus 2025</p>
+                            <div class="flex justify-end">
+                                <a href="{{ route('templates.edit', $type) }}"
+                                    class="text-white px-6 py-1 border-2 border-white rounded-full">
+                                    Edit Template
+                                </a>
                             </div>
                         </div>
-                        <div class="flex justify-end">
-                            <a href=""
-                                class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
-                                Template</a>
-                        </div>
-                    </div>
-
-                    <!-- Template Card 2 -->
-                    <div class="bg-[#00ABF1] flex-row rounded-2xl shadow-md p-4">
-                        <div class="flex mt-4 mb-8">
-                            <div class="flex-shrink-0 mx-2">
-                                <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center">
-                                    <img src="images/Docs.png" alt="" class="w-8 h-8">
-                                </div>
-                            </div>
-                            <div class="ml-4 text-white">
-                                <h3 class="text-2xl font-semibold">Surat Pengantar Digital</h3>
-                                <p class="text-md">Terakhir Diperbarui : 21 Agustus 2025</p>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <a href=""
-                                class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
-                                Template</a>
-                        </div>
-                    </div>
-
-                    <!-- Template Card 3 -->
-                    <div class="bg-[#00ABF1] flex-row rounded-2xl shadow-md p-4">
-                        <div class="flex mt-4 mb-8">
-                            <div class="flex-shrink-0 mx-2">
-                                <div class="bg-white rounded-3xl w-16 h-16 flex items-center justify-center">
-                                    <img src="images/Docs.png" alt="" class="w-8 h-8">
-                                </div>
-                            </div>
-                            <div class="ml-4 text-white">
-                                <h3 class="text-2xl font-semibold">Laporan Pemeriksaan</h3>
-                                <p class="text-md">Terakhir Diperbarui : 21 Agustus 2025</p>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <a href=""
-                                class="text-white px-6 py-1 border-2 border-white rounded-full">Edit
-                                Template</a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
+
             </div>
 
             <!-- Bagian Tabel -->

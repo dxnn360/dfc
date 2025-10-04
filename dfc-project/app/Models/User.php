@@ -52,4 +52,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function documents() {
+        return $this->belongsToMany(Document::class, 'document_user')->withTimestamps();
+    }
+
+    public function createdDocuments() {
+        return $this->hasMany(Document::class, 'user_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\DocumentTemplate;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('roles')->paginate(10);
-        return view('admin.users.index', compact('users'));
+        $templates = DocumentTemplate::all()->keyBy('type');
+        return view('admin.users.index', compact('users', 'templates'));
     }
 
     public function dashboard()
