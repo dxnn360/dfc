@@ -1,47 +1,152 @@
 <x-app-layout>
-    <div class="mr-8" x-data="{ tab: 'tugas' }">
-        <!-- Header -->
-        <div class="flex justify-between">
-            <div class="flex-1">
-                <h1 class="text-sm text-black">Hi, {{ auth()->user()->name }}👋</h1>
-            </div>
-            <div class="flex-1">
-                <h1 class="text-sm text-black text-right" id="today"></h1>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard Supervisor</h1>
+                    <p class="mt-2 text-gray-600">Overview dokumen dan aktivitas terbaru</p>
+                </div>
+                <div class="mt-4 sm:mt-0">
+                    <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm border">
+                        Hi, {{ auth()->user()->name }}👋
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Tabs -->
-        <div class="flex mt-6 border overflow-hidden">
-            <template x-for="item in ['tugas','pengantar','laporan']" :key="item">
-                <button 
-                    @click="tab = item"
-                    :class="tab === item 
-                        ? 'bg-[#00ABF1] border border-[#450F86] text-white font-semibold' 
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                    class="flex-1 px-4 py-3">
-                    <span x-text="item === 'tugas' ? 'Surat Tugas' : (item === 'pengantar' ? 'Surat Pengantar' : 'Laporan Pemeriksaan')"></span>
-                </button>
-            </template>
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Surat Tugas Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Surat Tugas</p>
+                        <p class="text-3xl font-bold text-gray-900 mt-2">{{ $suratTugas->count() }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Dokumen aktif</p>
+                    </div>
+                    <div class="p-3 bg-blue-50 rounded-lg">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Surat Pengantar Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Surat Pengantar</p>
+                        <p class="text-3xl font-bold text-gray-900 mt-2">{{ $suratPengantar->count() }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Dokumen aktif</p>
+                    </div>
+                    <div class="p-3 bg-green-50 rounded-lg">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laporan Pemeriksaan Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Laporan Pemeriksaan</p>
+                        <p class="text-3xl font-bold text-gray-900 mt-2">{{ $laporan->count() }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Dokumen aktif</p>
+                    </div>
+                    <div class="p-3 bg-purple-50 rounded-lg">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Tab Content Wrapper -->
-        <div class="relative mt-8">
-            <!-- Surat Tugas -->
-            <div x-show="tab === 'tugas'">
-                <h1 class="text-2xl font-bold mb-6">Halaman Surat Tugas</h1>
-                <x-surat-tugas-table-spv :suratTugas="$suratTugas" />
+        <!-- Recent Documents Section -->
+        <div class="space-y-8">
+            <!-- Surat Tugas Terbaru -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            5 Surat Tugas Terbaru
+                        </h2>
+                        <a href="{{ route('supervisor.document') }}"
+                            class="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+                            Lihat Semua
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <x-surat-tugas-table-spv :suratTugas="$suratTugas->take(5)" :showPagination="false" />
+                </div>
             </div>
 
-            <!-- Surat Pengantar -->
-            <div x-show="tab === 'pengantar'">
-                <h1 class="text-2xl font-bold mb-6">Halaman Surat Pengantar</h1>
-                <x-surat-pengantar-table-spv :suratPengantar="$suratPengantar" />
+            <!-- Surat Pengantar Terbaru -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-green-50 to-green-100 px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            5 Surat Pengantar Terbaru
+                        </h2>
+                        <a href="{{ route('supervisor.document') }}"
+                            class="text-sm text-green-600 hover:text-green-700 font-medium flex items-center gap-1">
+                            Lihat Semua
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <x-surat-pengantar-table-spv :suratPengantar="$suratPengantar->take(5)" :showPagination="false" />
+                </div>
             </div>
 
-            <!-- Laporan Pemeriksaan -->
-            <div x-show="tab === 'laporan'">
-                <h1 class="text-2xl font-bold mb-6">Halaman Laporan Pemeriksaan</h1>
-                <x-laporan-pemeriksaan-table-spv :laporan="$laporan" />
+            <!-- Laporan Pemeriksaan Terbaru -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            5 Laporan Pemeriksaan Terbaru
+                        </h2>
+                        <a href="{{ route('supervisor.document') }}"
+                            class="text-sm text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1">
+                            Lihat Semua
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <x-laporan-pemeriksaan-table-spv :laporan="$laporan->take(5)" :showPagination="false" />
+                </div>
             </div>
         </div>
     </div>

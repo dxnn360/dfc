@@ -14,9 +14,9 @@ class SupervisorController extends Controller
     // Dashboard
     public function dashboard()
     {
-        $suratTugas = SuratTugas::latest()->get();
-        $suratPengantar = SuratPengantar::latest()->get();
-        $laporan = LaporanPenyelidikan::latest()->get();
+        $suratTugas = SuratTugas::whereIn('status', ['pending', 'approved', 'rejected'])->get();
+        $suratPengantar = SuratPengantar::whereIn('status', ['pending', 'approved', 'rejected'])->get();
+        $laporan = LaporanPenyelidikan::whereIn('status', ['pending', 'approved', 'rejected'])->get();
 
         return view('supervisor.dashboard', compact('suratTugas', 'suratPengantar', 'laporan'));
     }
@@ -147,29 +147,30 @@ class SupervisorController extends Controller
         $body = $template?->body ?? '';
         $footer = $template?->footer ?? '';
 
-        $barangBuktiList = '';
-        if ($laporan->barang_bukti) {
-            $items = is_string($laporan->barang_bukti) ? json_decode($laporan->barang_bukti, true) : $laporan->barang_bukti;
-            $barangBuktiList = "<ul>";
-            foreach ($items as $bb) {
-                $barangBuktiList .= "<li>" . e($bb) . "</li>";
-            }
-            $barangBuktiList .= "</ul>";
-        }
+        // Fungsi untuk convert string/JSON/array ke <ul><li>…</li></ul>
+        $toHtmlList = function ($field) {
+            if (!$field)
+                return '';
+            $arr = is_array($field) ? $field : json_decode($field, true);
+            if (!$arr || !is_array($arr))
+                return e($field); // jika string biasa
+            return '<ul><li>' . implode('</li><li>', array_map('e', $arr)) . '</li></ul>';
+        };
 
         $data = [
-            'info' => $laporan->info,
+            'informasi_pemeriksaan' => $toHtmlList($laporan->informasi_pemeriksaan),
             'tanggal' => \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y'),
-            'nama_pemohon' => $laporan->nama_pemohon,
-            'jabatan_pemohon' => $laporan->jabatan_pemohon,
-            'barang_bukti' => $barangBuktiList,
-            'tujuan' => $laporan->tujuan,
-            'metodologi' => $laporan->metodologi,
-            'sumber' => $laporan->sumber,
-            'hasil' => $laporan->hasil,
-            'kesimpulan' => $laporan->kesimpulan,
+            'nama_pemohon' => e($laporan->nama_pemohon),
+            'jabatan_pemohon' => e($laporan->jabatan_pemohon),
+            'barang_bukti' => $toHtmlList($laporan->barang_bukti),
+            'tujuan_pemeriksaan' => $toHtmlList($laporan->tujuan_pemeriksaan),
+            'metodologi' => $toHtmlList($laporan->metodologi),
+            'sumber' => $toHtmlList($laporan->sumber),
+            'hasil_pemeriksaan' => e($laporan->hasil_pemeriksaan),
+            'kesimpulan' => e($laporan->kesimpulan),
         ];
 
+        // Ganti placeholder di header, body, footer
         foreach ($data as $key => $val) {
             $regexCurly = "/{{\s*$key\s*}}/i";
             $regexBracket = "/\[$key\]/i";
@@ -189,6 +190,7 @@ class SupervisorController extends Controller
 
         return $pdf->stream("Laporan_{$laporan->tanggal}.pdf");
     }
+
 
     // ------------------ Approve / Reject ------------------
     public function approveSuratTugas($id)
