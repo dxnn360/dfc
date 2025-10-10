@@ -104,7 +104,7 @@ class LaporanPenyelidikanController extends Controller
             'status'          => $request->status ?? $laporan->status,
         ]);
 
-        return redirect()->route('analis.laporan.index')
+        return redirect()->route('analis.document')
             ->with('success', 'Laporan berhasil diperbarui.');
     }
 
@@ -114,7 +114,7 @@ class LaporanPenyelidikanController extends Controller
     public function destroy(LaporanPenyelidikan $laporan)
     {
         $laporan->delete();
-        return redirect()->route('analis.laporan.index')
+        return redirect()->route('analis.document')
             ->with('success', 'Laporan berhasil dihapus.');
     }
 

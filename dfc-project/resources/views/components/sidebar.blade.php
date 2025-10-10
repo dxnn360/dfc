@@ -3,12 +3,12 @@
 <div x-data="{ 
     open: window.innerWidth >= 1024,
     isDesktop: window.innerWidth >= 1024
-}" class="bg-gray-50 min-h-screen">
+}" class="bg-white min-h-screen">
     <!-- Mobile Toggle Button -->
     <button 
         x-show="!isDesktop"
         @click="open = !open"
-        class="fixed top-6 left-6 z-50 p-3 bg-white rounded-xl shadow-lg border-0 hover:shadow-xl transition-all duration-300 group"
+        class="fixed top-6 z-50 p-3 bg-white rounded-xl shadow-lg border-0 hover:shadow-xl transition-all duration-300 group"
     >
         <div class="relative w-6 h-6">
             <span :class="[
@@ -180,12 +180,12 @@ aside nav::-webkit-scrollbar-track {
 }
 
 aside nav::-webkit-scrollbar-thumb {
-    background: #e2e8f0;
+    background: #ffffffff;
     border-radius: 10px;
 }
 
 aside nav::-webkit-scrollbar-thumb:hover {
-    background: #cbd5e1;
+    background: #ffffffff;
 }
 
 /* Smooth transitions */

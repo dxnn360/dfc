@@ -119,7 +119,7 @@
 
                         <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                            <a href="{{ route('analis.surat_tugas.index') }}" 
+                            <a href="{{ route('analis.document') }}" 
                                class="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -155,9 +155,9 @@
                             </div>
                         </div>
                         
-                        <!-- Preview Container dengan overflow-x only -->
-                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50" style="height: 800px; overflow-y: hidden; overflow-x: auto;">
-                            <div id="preview-area" class="min-w-max p-4">
+                        <!-- Preview Container dengan scroll horizontal dan vertikal -->
+                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                            <div id="preview-area" class="p-4">
                                 <!-- Preview akan di-render di sini -->
                                 <div class="text-center text-gray-500 py-20" style="width: 210mm;">
                                     <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,7 +170,7 @@
                         
                         <!-- Scroll Indicator -->
                         <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
-                            <span>← Scroll horizontal untuk melihat seluruh dokumen →</span>
+                            <span>← Scroll untuk melihat seluruh dokumen →</span>
                             <span class="flex items-center gap-1">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
@@ -185,24 +185,32 @@
     </div>
 
     <style>
-        /* Preview Content Styling - FULL A4 SIZE dengan horizontal scroll */
+        /* Preview Container Styling */
+        #preview-container {
+            height: 800px;
+            overflow: auto;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        /* Preview Content Styling - FULL A4 SIZE */
         .preview-content {
             width: 210mm;
             min-height: 297mm;
             background: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             margin: 0 auto;
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         .a4-page {
             width: 100%;
             min-height: 297mm;
             padding: 25mm;
-            font-family: 'Times New Roman', serif;
-            font-size: 12pt;
-            line-height: 1.6;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
             display: flex;
             flex-direction: column;
         }
@@ -253,34 +261,29 @@
             margin-bottom: 3mm;
         }
 
-        /* Container styling dengan overflow horizontal saja */
-        #preview-container {
-            height: 800px;
-            overflow-y: hidden;
-            overflow-x: auto;
-            background: #f8f9fa;
-        }
-
-        #preview-area {
-            min-width: max-content;
-        }
-
+        /* Styling untuk scrollbar */
         #preview-container::-webkit-scrollbar {
-            height: 8px;
+            width: 12px;
+            height: 12px;
         }
 
         #preview-container::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         #preview-container::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 4px;
+            border-radius: 6px;
+            border: 2px solid #f1f1f1;
         }
 
         #preview-container::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
+        }
+
+        #preview-container::-webkit-scrollbar-corner {
+            background: #f1f1f1;
         }
 
         /* Print styles */
@@ -304,10 +307,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Set today's date in display
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const todayDisplay = new Date().toLocaleDateString('id-ID', options);
-
             const TEMPLATE = @json([
                 'header' => $template->header ?? '<div style="text-align:center;"><h3>INSTANSI</h3><p>SURAT TUGAS</p></div>',
                 'body' => $template->body ?? '<p>Template body belum diatur</p>',
@@ -403,9 +402,10 @@
                     </div>
                 `;
 
-                // Auto-scroll ke kiri setelah update
+                // Auto-scroll ke kiri atas setelah update
                 const previewContainer = document.getElementById('preview-container');
                 previewContainer.scrollLeft = 0;
+                previewContainer.scrollTop = 0;
             }
 
             // Event listeners untuk semua input

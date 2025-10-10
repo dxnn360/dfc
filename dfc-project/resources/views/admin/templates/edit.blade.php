@@ -1,186 +1,399 @@
 <x-app-layout>
-    <div class="px-4 py-6 md:mr-8">
-        <!-- Header -->
-        <div class="flex flex-col md:flex-row justify-between mb-6">
-            <div class="mb-2 md:mb-0">
-                <h1 class="text-sm text-gray-700">Hi, {{ auth()->user()->name }}👋</h1>
-            </div>
-            <div>
-                <h1 class="text-sm text-gray-700" id="today"></h1>
-            </div>
-        </div>
-
-        <!-- Title -->
-        <div class="mb-8">
-            <h1 class="text-2xl md:text-3xl font-semibold mb-2 text-gray-800">
-                Edit Template {{ ucfirst(str_replace('_', ' ', $template->type)) }}
-            </h1>
-            <p class="text-sm text-gray-600">Silahkan atur template dokumen sesuai kebutuhan.</p>
-        </div>
-
-        <!-- Form + Preview -->
-        <div class="flex flex-col xl:flex-row gap-6">
-            <!-- Form -->
-            <div class="xl:w-1/2">
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 md:p-8 h-full">
-                    <form method="POST" action="{{ route('templates.update', $template->type) }}" enctype="multipart/form-data">
-                        @csrf
-
-                        <!-- Header -->
-                        <div class="mb-6">
-                            <label class="block mb-2 font-medium text-gray-700">Header</label>
-                            <textarea id="header" name="header" class="summernote">{{ old('header', $template->header) }}</textarea>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="mb-6">
-                            <label class="block mb-2 font-medium text-gray-700">Footer</label>
-                            <textarea id="footer" name="footer" class="summernote">{{ old('footer', $template->footer) }}</textarea>
-                        </div>
-
-                        <!-- Logo -->
-                        <div class="mb-6">
-                            <label class="block mb-2 font-medium text-gray-700">Logo</label>
-                            <input type="file" name="logo" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                            @if($template->logo)
-                                <div class="mt-3">
-                                    <p class="text-sm text-gray-500 mb-1">Current logo:</p>
-                                    <img src="{{ asset('storage/' . $template->logo) }}" alt="Logo" class="h-12 border border-gray-200 rounded">
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Format Tanggal -->
-                        <div class="mb-6">
-                            <label class="block mb-2 font-medium text-gray-700">Format Tanggal</label>
-                            <select name="format_tanggal" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                <option value="d/m/Y" {{ $template->format_tanggal == 'd/m/Y' ? 'selected' : '' }}>04/09/2025</option>
-                                <option value="d-m-Y" {{ $template->format_tanggal == 'd-m-Y' ? 'selected' : '' }}>04-09-2025</option>
-                                <option value="d F Y" {{ $template->format_tanggal == 'd F Y' ? 'selected' : '' }}>04 September 2025</option>
-                                <option value="F d, Y" {{ $template->format_tanggal == 'F d, Y' ? 'selected' : '' }}>September 04, 2025</option>
-                            </select>
-                        </div>
-
-                        <!-- Placeholder -->
-                        <div class="mb-6">
-                            <label class="block mb-2 font-medium text-gray-700">Placeholder</label>
-                            <p class="text-xs text-gray-500 mb-3">
-                                Klik placeholder untuk menyisipkan ke dalam editor aktif.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                @foreach($placeholders as $key => $desc)
-                                    <span
-                                        class="px-3 py-1.5 bg-gray-100 rounded-md text-xs font-mono cursor-pointer placeholder-item hover:bg-gray-200 transition-colors"
-                                        title="{{ $desc }}">
-                                        {{ $key }}
-                                    </span>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="mb-6">
-                            <label class="block mb-2 font-medium text-gray-700">Isi Template</label>
-                            <textarea id="body" name="body" class="summernote">{{ old('body', $template->body) }}</textarea>
-                        </div>
-
-                        <!-- Tombol -->
-                        <div class="flex flex-col sm:flex-row justify-end gap-3 mt-8 pt-6 border-t border-gray-200">
-                            <a href="{{ route('admin.dashboard') }}"
-                                class="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg hover:bg-gray-200 transition-colors text-center font-medium">
-                                Batal
-                            </a>
-                            <button type="submit" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                                Simpan
-                            </button>
-                        </div>
-                    </form>
+    <div class="min-h-screen bg-white py-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header Section -->
+            <div class="mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">
+                            Edit Template {{ ucfirst(str_replace('_', ' ', $template->type)) }}
+                        </h1>
+                        <p class="mt-2 text-gray-600">Atur dan sesuaikan template dokumen sesuai kebutuhan Anda</p>
+                    </div>
+                    <div class="mt-4 sm:mt-0">
+                        <div id="today" class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm border"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Preview -->
-            <div class="xl:w-1/2 mt-6 xl:mt-0">
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 md:p-8 h-full flex flex-col">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-semibold text-gray-800">Preview Dokumen</h2>
-                        <div class="text-xs text-gray-500">A4 Ratio</div>
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <!-- Form Section -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+                            <h2 class="text-xl font-semibold text-gray-900">Konfigurasi Template</h2>
+                        </div>
+                        
+                        <form method="POST" action="{{ route('templates.update', $template->type) }}" enctype="multipart/form-data" class="space-y-6">
+                            @csrf
+
+                            <!-- Header Section -->
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+                                        </svg>
+                                        Header Template
+                                    </span>
+                                </label>
+                                <textarea id="header" name="header" class="summernote">{{ old('header', $template->header) }}</textarea>
+                            </div>
+
+                                                        <!-- Placeholder Section -->
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                        </svg>
+                                        Placeholder Variabel
+                                    </span>
+                                </label>
+                                <p class="text-xs text-gray-500">
+                                    Klik placeholder untuk menyisipkan ke dalam editor aktif.
+                                </p>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                    @foreach($placeholders as $key => $desc)
+                                        <button type="button" class="placeholder-item">
+                                            <span class="font-mono text-xs">{{ $key }}</span>
+                                            <span class="text-xs text-gray-500 truncate">{{ $desc }}</span>
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <!-- Body Section -->
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                        </svg>
+                                        Isi Template
+                                    </span>
+                                </label>
+                                <textarea id="body" name="body" class="summernote">{{ old('body', $template->body) }}</textarea>
+                            </div>
+
+                            <!-- Footer Section -->
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 10v6M2 10v6M6 10v6M18 10v6M8 8h8M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                                        </svg>
+                                        Footer Template
+                                    </span>
+                                </label>
+                                <textarea id="footer" name="footer" class="summernote">{{ old('footer', $template->footer) }}</textarea>
+                            </div>
+
+                            <!-- Logo Upload -->
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
+                                        </svg>
+                                        Logo Perusahaan
+                                    </span>
+                                </label>
+                                <div class="file-upload-container">
+                                    <input type="file" name="logo" id="logo" class="hidden" accept=".jpg,.jpeg,.png,.svg">
+                                    <label for="logo" class="file-upload-label">
+                                        <div class="file-upload-content">
+                                            <svg class="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                            </svg>
+                                            <span id="logo_name" class="text-gray-500">Upload file logo</span>
+                                            <span class="text-xs text-gray-400 mt-1">JPG, PNG, atau SVG (max. 2MB)</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                @if($template->logo)
+                                    <div class="mt-3 p-3 bg-gray-50 rounded-lg">
+                                        <p class="text-sm text-gray-600 mb-2">Logo saat ini:</p>
+                                        <img src="{{ asset('storage/' . $template->logo) }}" alt="Logo" class="h-12 border border-gray-200 rounded">
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Format Tanggal -->
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">
+                                    <span class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        Format Tanggal
+                                    </span>
+                                </label>
+                                <select name="format_tanggal" class="custom-select">
+                                    <option value="d/m/Y" {{ $template->format_tanggal == 'd/m/Y' ? 'selected' : '' }}>04/09/2025</option>
+                                    <option value="d-m-Y" {{ $template->format_tanggal == 'd-m-Y' ? 'selected' : '' }}>04-09-2025</option>
+                                    <option value="d F Y" {{ $template->format_tanggal == 'd F Y' ? 'selected' : '' }}>04 September 2025</option>
+                                    <option value="F d, Y" {{ $template->format_tanggal == 'F d, Y' ? 'selected' : '' }}>September 04, 2025</option>
+                                    <option value="l, d F Y" {{ $template->format_tanggal == 'l, d F Y' ? 'selected' : '' }}>Kamis, 04 September 2025</option>
+                                </select>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex gap-4 pt-6 border-t border-gray-200">
+                                <a href="{{ route('admin.dashboard') }}" class="flex-1 cancel-button">
+                                    Batalkan
+                                </a>
+                                <button type="submit" class="flex-1 submit-button">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Simpan Template
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div id="preview-wrapper" class="overflow-y-auto bg-gray-50 rounded-lg p-4 flex-1 flex items-center justify-center">
-                        <!-- Halaman akan di-generate otomatis oleh JS -->
+                </div>
+
+                <!-- Preview Section -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <h2 class="text-xl font-semibold text-gray-900">Preview Template</h2>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>A4 Ratio</span>
+                            </div>
+                        </div>
+
+                        <!-- Preview Container dengan Scroll -->
+                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                            <div id="preview-area" class="p-4">
+                                <!-- Preview akan di-render di sini -->
+                                <div class="text-center text-gray-500 py-20">
+                                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    <h3 class="text-lg font-medium text-gray-600 mb-2">Preview Template</h3>
+                                    <p class="text-sm text-gray-400">Edit template untuk melihat preview di sini</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Info -->
+                        <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div>
+                                    <h4 class="text-sm font-medium text-blue-900">Tips Template yang Baik</h4>
+                                    <ul class="mt-2 text-xs text-blue-700 space-y-1">
+                                        <li>• Gunakan placeholder variabel untuk data dinamis</li>
+                                        <li>• Format tanggal akan otomatis menyesuaikan pilihan</li>
+                                        <li>• Preview akan update secara real-time saat editing</li>
+                                        <li>• Logo dalam format vector (SVG) untuk kualitas terbaik</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tambahin library -->
+    <!-- Libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <style>
-        #preview-wrapper {
-            background: #f9fafb;
-            padding: 20px;
-            min-height: 500px;
+        /* File Upload Styling */
+        .file-upload-container {
+            position: relative;
         }
 
-        .page-container {
-            width: 100%;
+        .file-upload-label {
+            display: block;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .file-upload-label:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+
+        .file-upload-label.dragover {
+            border-color: #3b82f6;
+            background: #dbeafe;
+        }
+
+        .file-upload-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
         }
 
-        .page {
-            /* A4 ratio: 1:1.414 (210mm:297mm) */
+        /* Custom Select Styling */
+        .custom-select {
             width: 100%;
-            max-width: 400px;
-            height: calc(400px * 1.414);
-            padding: 25px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
             background: white;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            color: #374151;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            ring: 2px;
+            ring-color: #3b82f6;
+        }
+
+        /* Placeholder Items */
+        .placeholder-item {
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
         }
 
-        .page-header {
-            margin-bottom: 15px;
-            border-bottom: 1px solid #e5e7eb;
+        .placeholder-item:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+            transform: translateY(-1px);
+        }
+
+        /* Button Styling */
+        .cancel-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #d1d5db;
+            border-radius: 12px;
+            background: white;
+            color: #6b7280;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-button:hover {
+            background: #f3f4f6;
+            color: #374151;
+            border-color: #9ca3af;
+        }
+
+        .submit-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Preview Container Styling */
+        #preview-container {
+            height: 600px;
+            overflow: auto;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        /* Styling untuk scrollbar */
+        #preview-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        #preview-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        #preview-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        #preview-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Preview Content Styling */
+        .preview-content {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            padding: 25mm;
+        }
+
+        .preview-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
             padding-bottom: 10px;
         }
 
-        .page-content {
-            flex: 1;
-            word-wrap: break-word;
-            line-height: 1.6;
-            /* Remove semua properti scroll */
-            overflow: visible;
-            max-height: none;
-            height: auto;
+        .preview-body {
+            margin: 20px 0;
+            text-align: justify;
         }
 
-        .page-footer {
-            margin-top: 15px;
-            border-top: 1px solid #e5e7eb;
+        .preview-footer {
+            margin-top: 20px;
+            border-top: 1px solid #000;
             padding-top: 10px;
             text-align: center;
-            font-size: 0.875rem;
-            color: #6b7280;
+            font-size: 10pt;
         }
 
-        .page-indicator {
-            font-size: 0.75rem;
-            color: #6b7280;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        /* Adjust Summernote height to fit better in 50/50 layout */
+        /* Summernote Customization */
         .note-editor.note-frame {
             border: 1px solid #d1d5db !important;
             border-radius: 0.5rem !important;
@@ -200,79 +413,43 @@
         }
         
         .note-editor.note-frame .note-editing-area .note-editable {
-            padding: 10px !important;
-            min-height: 150px !important;
+            padding: 12px !important;
+            min-height: 120px !important;
             max-height: 200px !important;
-        }
-        
-        .note-editor.note-frame .note-editing-area {
-            min-height: 150px !important;
+            font-size: 14px !important;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 1280px) {
-            .page {
-                max-width: 350px;
-                height: calc(350px * 1.414);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .page {
-                max-width: 100%;
-                height: auto;
-                min-height: 400px;
-                aspect-ratio: 1/1.414;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .preview-content {
+                width: 100%;
+                min-height: auto;
+                padding: 20px;
             }
             
-            .note-editor.note-frame .note-editing-area .note-editable {
-                max-height: 250px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page {
-                max-width: 100%;
-                height: auto;
-                min-height: 300px;
-            }
-        }
-
-        @media print {
-            .page {
-                margin: 0;
-                border: none;
-                box-shadow: none;
-                width: auto;
-                height: auto;
-                min-height: auto;
-                padding: 0;
+            #preview-container {
+                height: 400px;
             }
         }
     </style>
 
     <script>
-        let activeEditor = '#body'; // default target body
+        let activeEditor = '#body';
 
         function updatePreview() {
             const header = $('#header').summernote('code');
             const body = $('#body').summernote('code');
             const footer = $('#footer').summernote('code');
 
-            // gabung konten jadi satu halaman
             const fullContent = `
-                <div class="page-container">
-                    <div class="page">
-                        <div class="page-header">${header}</div>
-                        <div class="page-content">${body}</div>
-                        <div class="page-footer">${footer}</div>
-                    </div>
-                    <div class="page-indicator">Halaman 1</div>
+                <div class="preview-content">
+                    <div class="preview-header">${header}</div>
+                    <div class="preview-body">${body}</div>
+                    <div class="preview-footer">${footer}</div>
                 </div>
             `;
 
-            // inject ke wrapper
-            $('#preview-wrapper').html(fullContent);
+            $('#preview-area').html(fullContent);
         }
 
         $(document).ready(function () {
@@ -280,11 +457,12 @@
             const today = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('today').textContent = today.toLocaleDateString('id-ID', options);
-            
+
+            // Initialize Summernote
             $('.summernote').summernote({
-                placeholder: 'Tulis di sini...',
+                placeholder: 'Tulis konten template di sini...',
                 tabsize: 2,
-                height: 180,
+                height: 150,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -305,10 +483,43 @@
                 }
             });
 
-            // Insert placeholder ke editor aktif
+            // File upload handler
+            $('#logo').on('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    $('#logo_name').text(file.name).addClass('text-gray-900 font-medium');
+                    
+                    // Preview logo in template
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        // You can add logo to preview here if needed
+                        console.log('Logo uploaded:', file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Drag and drop for file upload
+            $('.file-upload-label').on('dragover', function (e) {
+                e.preventDefault();
+                $(this).addClass('dragover');
+            }).on('dragleave', function (e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+            }).on('drop', function (e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+                const files = e.originalEvent.dataTransfer.files;
+                if (files.length > 0) {
+                    $('#logo')[0].files = files;
+                    $('#logo').trigger('change');
+                }
+            });
+
+            // Placeholder insertion
             $(document).on('click', '.placeholder-item', function () {
-                let placeholder = $(this).text();
-                let editor = $(activeEditor);
+                const placeholder = $(this).find('.font-mono').text();
+                const editor = $(activeEditor);
 
                 editor.summernote('editor.restoreRange');
                 editor.summernote('editor.focus');
@@ -317,7 +528,23 @@
                 updatePreview();
             });
 
-            updatePreview(); // init preview pertama kali
+            // Form submission handling
+            $('form').on('submit', function (e) {
+                const submitButton = $(this).find('button[type="submit"]');
+                const originalText = submitButton.html();
+                
+                submitButton.html(`
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Menyimpan...
+                `);
+                submitButton.prop('disabled', true);
+            });
+
+            // Initial preview
+            updatePreview();
         });
     </script>
 </x-app-layout>

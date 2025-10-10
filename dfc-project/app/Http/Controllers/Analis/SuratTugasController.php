@@ -62,7 +62,7 @@ class SuratTugasController extends Controller
 
         $suratTugas->users()->attach($data['user_ids']);
 
-        return redirect()->route('analis.surat_tugas.index')
+        return redirect()->route('analis.document')
             ->with('success', 'Surat Tugas berhasil dibuat dan menunggu verifikasi supervisor.');
     }
 
@@ -105,7 +105,7 @@ class SuratTugasController extends Controller
 
         $surat_tugas->users()->sync($data['user_ids']);
 
-        return redirect()->route('analis.surat_tugas.index')
+        return redirect()->route('analis.document')
             ->with('success', 'Surat Tugas berhasil diperbarui.');
     }
 
@@ -113,7 +113,7 @@ class SuratTugasController extends Controller
     {
         $surat_tugas->delete();
 
-        return redirect()->route('analis.surat_tugas.index')
+        return redirect()->route('analis.document')
             ->with('success', 'Surat Tugas berhasil dihapus.');
     }
 

@@ -105,7 +105,7 @@
 
                         <!-- Action Buttons -->
                         <div class="flex flex-col justify-center w-full sm:flex-row gap-4 pt-4">
-                            <a href="{{ route('analis.surat_tugas.index') }}" 
+                            <a href="{{ route('analis.document') }}" 
                                class="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -141,8 +141,9 @@
                             </div>
                         </div>
                         
-                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-hidden">
-                            <div id="preview-area" class="preview-content min-h-[800px] flex items-center justify-center p-4">
+                        <!-- Preview Container dengan Scroll Horizontal dan Vertikal -->
+                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                            <div id="preview-area" class="preview-content min-h-[800px] p-4">
                                 <!-- Preview akan di-render di sini -->
                                 <div class="text-center text-gray-500">
                                     <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,18 +160,20 @@
     </div>
 
     <style>
-        .preview-content {
-            transform: scale(0.68);
-            transform-origin: center;
-            width: 210mm;
-            min-height: 297mm;
+        /* Container styling untuk scrollable preview */
+        #preview-container {
+            height: 800px;
+            overflow: auto;
+            background: #f8f9fa;
+            position: relative;
         }
 
-        .a4-page {
+        /* Konten preview dengan ukuran A4 */
+        .preview-content {
             width: 210mm;
             min-height: 297mm;
-            padding: 25mm;
             background: white;
+            margin: 0 auto;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             font-family: 'Times New Roman', serif;
             font-size: 12pt;
@@ -179,8 +182,10 @@
             word-wrap: break-word;
             display: flex;
             flex-direction: column;
+            padding: 25mm;
         }
 
+        /* Styling untuk bagian-bagian surat */
         .a4-header {
             margin-bottom: 15mm;
             text-align: center;
@@ -227,30 +232,29 @@
             margin-bottom: 3mm;
         }
 
-        /* Container styling */
-        #preview-container {
-            height: 800px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background: #f8f9fa;
-        }
-
+        /* Styling untuk scrollbar */
         #preview-container::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
+            height: 12px;
         }
 
         #preview-container::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         #preview-container::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 4px;
+            border-radius: 6px;
+            border: 2px solid #f1f1f1;
         }
 
         #preview-container::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
+        }
+
+        #preview-container::-webkit-scrollbar-corner {
+            background: #f1f1f1;
         }
 
         /* Print styles */

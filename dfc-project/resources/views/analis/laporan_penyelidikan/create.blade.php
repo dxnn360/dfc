@@ -19,7 +19,6 @@
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     <!-- Form Section -->
                     <div class="space-y-6">
-                        <!-- [Form sections tetap sama seperti sebelumnya] -->
                         <!-- Basic Information Card -->
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -251,10 +250,28 @@
                                 </div>
                             </div>
                             
-                            <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-hidden flex items-center justify-center" style="height: 800px;">
-                                <div id="preview-area" class="preview-content">
+                            <!-- Preview Container dengan scroll horizontal dan vertikal -->
+                            <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                                <div id="preview-area" class="p-4">
                                     <!-- Preview akan di-render di sini -->
+                                    <div class="text-center text-gray-500 py-20" style="width: 210mm;">
+                                        <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        <p>Preview akan muncul di sini</p>
+                                    </div>
                                 </div>
+                            </div>
+                            
+                            <!-- Scroll Indicator -->
+                            <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
+                                <span>← Scroll untuk melihat seluruh dokumen →</span>
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                                    </svg>
+                                    Geser untuk melihat
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -264,24 +281,34 @@
     </div>
 
     <style>
-        .preview-content {
-            transform: scale(0.68);
-            transform-origin: center;
-            width: 210mm;
-            min-height: 297mm;
+        /* Preview Container Styling */
+        #preview-container {
+            height: 800px;
+            overflow: auto;
+            background: #f8f9fa;
+            position: relative;
         }
 
-        .a4-page {
+        /* Preview Content Styling - FULL A4 SIZE */
+        .preview-content {
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm;
             background: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            margin: 0 auto;
             font-family: 'Times New Roman', serif;
             font-size: 12pt;
             line-height: 1.6;
             overflow-wrap: break-word;
             word-wrap: break-word;
+        }
+
+        .a4-page {
+            width: 100%;
+            min-height: 297mm;
+            padding: 20mm;
+            display: flex;
+            flex-direction: column;
         }
 
         .a4-header,
@@ -292,6 +319,7 @@
 
         .a4-body {
             margin: 20px 0;
+            flex: 1;
         }
 
         .preview-table {
@@ -345,37 +373,29 @@
             overflow-wrap: break-word;
         }
 
-        /* Container styling tanpa scroll horizontal */
-        #preview-container {
-            height: 800px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background: #f8f9fa;
-        }
-
-        /* Custom scrollbar vertical saja */
+        /* Styling untuk scrollbar */
         #preview-container::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
+            height: 12px;
         }
 
         #preview-container::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         #preview-container::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 4px;
+            border-radius: 6px;
+            border: 2px solid #f1f1f1;
         }
 
         #preview-container::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
 
-        /* Pastikan tidak ada scroll horizontal */
-        #preview-container {
-            scrollbar-width: thin;
-            scrollbar-color: #c1c1c1 #f1f1f1;
+        #preview-container::-webkit-scrollbar-corner {
+            background: #f1f1f1;
         }
 
         /* Print styles */
@@ -393,19 +413,6 @@
             .preview-content {
                 transform: none;
                 margin: 0;
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1536px) {
-            .preview-content {
-                transform: scale(0.65);
-            }
-        }
-
-        @media (max-width: 1280px) {
-            .preview-content {
-                transform: scale(0.6);
             }
         }
     </style>
@@ -504,6 +511,33 @@
                 </table>`;
             }
 
+            function getSelectedMetodologi() {
+                const selectedOption = document.querySelector('input[name="metodologi_option"]:checked');
+                if (!selectedOption) return 'Belum dipilih';
+                
+                const option = selectedOption.value;
+                const valueInput = document.querySelector(`[name="metodologi_${option}_value"]`);
+                
+                if (valueInput) {
+                    const value = valueInput.value.trim();
+                    if (value) return value;
+                    
+                    // Return default descriptions if no custom value
+                    switch(option) {
+                        case 'a':
+                            return 'Analisis Digital Forensik Standar menggunakan tools forensik digital seperti FTK Imager, Autopsy, dan Wireshark';
+                        case 'b':
+                            return 'Investigasi Lanjutan termasuk analisis memori, network traffic, dan timeline analysis';
+                        case 'custom':
+                            return 'Metodologi kustom yang disesuaikan dengan kebutuhan investigasi';
+                        default:
+                            return 'Metodologi belum ditentukan';
+                    }
+                }
+                
+                return 'Metodologi belum dipilih';
+            }
+
             function updatePreview() {
                 let header = TEMPLATE.header;
                 let body = TEMPLATE.body;
@@ -517,7 +551,7 @@
                     info: document.getElementById('informasi_pemeriksaan')?.value || 'Belum diisi',
                     barang_bukti: buildBarangBuktiTable(),
                     tujuan: document.getElementById('tujuan_pemeriksaan')?.value || 'Belum diisi',
-                    metodologi: document.getElementById('metodologi')?.value || 'Belum diisi',
+                    metodologi: getSelectedMetodologi(),
                     sumber: buildSumberTable(),
                     hasil: document.getElementById('hasil_pemeriksaan')?.value || 'Belum diisi',
                     kesimpulan: document.getElementById('kesimpulan')?.value || 'Belum diisi'
@@ -530,18 +564,25 @@
                 });
 
                 document.getElementById('preview-area').innerHTML = `
-                    <div class="a4-page">
-                        <div class="a4-header">${header}</div>
-                        <div class="a4-body">${body}</div>
-                        <div class="a4-footer">${footer}</div>
+                    <div class="preview-content">
+                        <div class="a4-page">
+                            <div class="a4-header">${header}</div>
+                            <div class="a4-body">${body}</div>
+                            <div class="a4-footer">${footer}</div>
+                        </div>
                     </div>
                 `;
+
+                // Auto-scroll ke kiri atas setelah update
+                const previewContainer = document.getElementById('preview-container');
+                previewContainer.scrollLeft = 0;
+                previewContainer.scrollTop = 0;
             }
 
-            // [Event listeners tetap sama seperti sebelumnya]
+            // Event listeners untuk semua input
             const formElements = [
                 'nomor_surat', 'tanggal', 'nama_pemohon', 'jabatan_pemohon',
-                'informasi_pemeriksaan', 'tujuan_pemeriksaan', 'metodologi',
+                'informasi_pemeriksaan', 'tujuan_pemeriksaan',
                 'hasil_pemeriksaan', 'kesimpulan'
             ];
 
@@ -551,6 +592,15 @@
                     el.addEventListener('input', updatePreview);
                     el.addEventListener('change', updatePreview);
                 }
+            });
+
+            // Event listeners untuk metodologi
+            document.querySelectorAll('input[name="metodologi_option"]').forEach(radio => {
+                radio.addEventListener('change', updatePreview);
+            });
+
+            document.querySelectorAll('.metodologi-input').forEach(input => {
+                input.addEventListener('input', updatePreview);
             });
 
             // Dynamic barang bukti

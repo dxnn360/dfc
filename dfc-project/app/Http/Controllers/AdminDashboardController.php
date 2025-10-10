@@ -8,10 +8,22 @@ use App\Models\DocumentTemplate;
 
 class AdminDashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('roles')->paginate(10);
+
         $templates = DocumentTemplate::all()->keyBy('type');
+
+        $query = User::with('roles');
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->paginate(10);
 
         return view('admin.dashboard', compact('users', 'templates'));
     }

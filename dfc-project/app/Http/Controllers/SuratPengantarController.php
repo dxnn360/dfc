@@ -46,7 +46,7 @@ class SuratPengantarController extends Controller
 
         SuratPengantar::create($validated);
 
-        return redirect()->route('analis.surat_pengantar.index')->with('success', 'Surat Pengantar berhasil dibuat!');
+        return redirect()->route('analis.document')->with('success', 'Surat Pengantar berhasil dibuat!');
     }
 
     public function edit(SuratPengantar $surat_pengantar)
@@ -75,7 +75,7 @@ class SuratPengantarController extends Controller
 
         $surat_pengantar->update($validated);
 
-        return redirect()->route('analis.surat_pengantar.index')->with('success', 'Surat Pengantar berhasil diperbarui!');
+        return redirect()->route('analis.document')->with('success', 'Surat Pengantar berhasil diperbarui!');
     }
 
     public function destroy(SuratPengantar $surat_pengantar)

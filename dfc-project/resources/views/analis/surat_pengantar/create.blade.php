@@ -163,10 +163,28 @@
                             </div>
                         </div>
                         
-                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-hidden flex items-center justify-center" style="height: 800px;">
-                            <div id="preview-area" class="preview-content">
+                        <!-- Preview Container dengan scroll horizontal dan vertikal -->
+                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                            <div id="preview-area" class="p-4">
                                 <!-- Preview akan di-render di sini -->
+                                <div class="text-center text-gray-500 py-20" style="width: 210mm;">
+                                    <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    <p>Preview akan muncul di sini</p>
+                                </div>
                             </div>
+                        </div>
+                        
+                        <!-- Scroll Indicator -->
+                        <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
+                            <span>← Scroll untuk melihat seluruh dokumen →</span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                                </svg>
+                                Geser untuk melihat
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -175,24 +193,34 @@
     </div>
 
     <style>
-        .preview-content {
-            transform: scale(0.68);
-            transform-origin: center;
-            width: 210mm;
-            min-height: 297mm;
+        /* Preview Container Styling */
+        #preview-container {
+            height: 800px;
+            overflow: auto;
+            background: #f8f9fa;
+            position: relative;
         }
 
-        .a4-page {
+        /* Preview Content Styling - FULL A4 SIZE */
+        .preview-content {
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm;
             background: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            margin: 0 auto;
             font-family: 'Times New Roman', serif;
             font-size: 12pt;
             line-height: 1.6;
             overflow-wrap: break-word;
             word-wrap: break-word;
+        }
+
+        .a4-page {
+            width: 100%;
+            min-height: 297mm;
+            padding: 20mm;
+            display: flex;
+            flex-direction: column;
         }
 
         .a4-header,
@@ -203,6 +231,7 @@
 
         .a4-body {
             margin: 20px 0;
+            flex: 1;
         }
 
         .barang-bukti-table {
@@ -236,37 +265,36 @@
             width: auto;
         }
 
-        /* Container styling */
-        #preview-container {
-            height: 800px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background: #f8f9fa;
-        }
-
+        /* Styling untuk scrollbar */
         #preview-container::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
+            height: 12px;
         }
 
         #preview-container::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         #preview-container::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 4px;
+            border-radius: 6px;
+            border: 2px solid #f1f1f1;
         }
 
         #preview-container::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
 
+        #preview-container::-webkit-scrollbar-corner {
+            background: #f1f1f1;
+        }
+
         /* Print styles */
         @media print {
             .a4-page {
                 box-shadow: none;
-                margin: 2omm;
+                margin: 0;
                 page-break-after: always;
             }
             
@@ -276,7 +304,7 @@
             
             .preview-content {
                 transform: none;
-                margin: 20px;
+                margin: 0;
             }
         }
     </style>
@@ -378,12 +406,19 @@
                 });
 
                 document.getElementById('preview-area').innerHTML = `
-                    <div class="a4-page">
-                        <div class="a4-header">${header}</div>
-                        <div class="a4-body">${body}</div>
-                        <div class="a4-footer">${footer}</div>
+                    <div class="preview-content">
+                        <div class="a4-page">
+                            <div class="a4-header">${header}</div>
+                            <div class="a4-body">${body}</div>
+                            <div class="a4-footer">${footer}</div>
+                        </div>
                     </div>
                 `;
+
+                // Auto-scroll ke kiri atas setelah update
+                const previewContainer = document.getElementById('preview-container');
+                previewContainer.scrollLeft = 0;
+                previewContainer.scrollTop = 0;
             }
 
             // Event listeners untuk semua input
