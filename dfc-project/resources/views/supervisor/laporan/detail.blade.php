@@ -59,11 +59,11 @@
                                 <div class="grid grid-cols-1 gap-3">
                                     <div>
                                         <p class="text-sm text-gray-500 mb-1">Nama Pemohon</p>
-                                        <p class="text-gray-900 font-medium">{{ $laporan->nama_pemohon }}</p>
+                                        <p class="text-gray-900 font-medium break-words">{{ $laporan->nama_pemohon }}</p>
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500 mb-1">Unit Kerja</p>
-                                        <p class="text-gray-900 font-medium">{{ $laporan->jabatan_pemohon }}</p>
+                                        <p class="text-gray-900 font-medium break-words">{{ $laporan->jabatan_pemohon }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                     </svg>
                                     Tujuan Pemeriksaan
                                 </h3>
-                                <p class="text-gray-700">{{ $laporan->tujuan_pemeriksaan }}</p>
+                                <p class="text-gray-700 break-words whitespace-normal">{{ $laporan->tujuan_pemeriksaan }}</p>
                             </div>
 
                             <!-- Metodologi -->
@@ -91,7 +91,7 @@
                                     @foreach($metodologi as $item)
                                         <li class="flex items-start">
                                             <span class="inline-block w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                            <span class="text-gray-700">{{ $item }}</span>
+                                            <span class="text-gray-700 break-words">{{ $item }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -109,7 +109,7 @@
                                     @foreach($sumber as $item)
                                         <li class="flex items-start">
                                             <span class="inline-block w-2 h-2 bg-yellow-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                            <span class="text-gray-700">
+                                            <span class="text-gray-700 break-words">
                                                 @if(is_array($item))
                                                     {{ implode(', ', $item) }}
                                                 @else
@@ -133,7 +133,7 @@
                                     @foreach($barangBukti as $item)
                                         <li class="flex items-start">
                                             <span class="inline-block w-2 h-2 bg-orange-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                            <span class="text-gray-700">{{ $item }}</span>
+                                            <span class="text-gray-700 break-words">{{ $item }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -142,12 +142,12 @@
                             <!-- Kesimpulan -->
                             <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2 flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 mr-2 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                     Kesimpulan
                                 </h3>
-                                <p class="text-gray-700 leading-relaxed">{{ $laporan->kesimpulan }}</p>
+                                <p class="text-gray-700 leading-relaxed break-words overflow-wrap-anywhere word-break-break-word" style="word-wrap: break-word; overflow-wrap: break-word; word-break: break-word;">{{ $laporan->kesimpulan }}</p>
                             </div>
                         </div>
                     </div>
@@ -183,8 +183,8 @@
                 </div>
 
                 <!-- KANAN: PDF Preview -->
-                <div class="lg:w-1/2">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden sticky top-6">
+                <div class="lg:w-1/2 flex-shrink-0">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden lg:sticky lg:top-6">
                         <div class="bg-gradient-to-r from-gray-700 to-gray-800 px-6 py-4">
                             <h3 class="text-white font-semibold flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
