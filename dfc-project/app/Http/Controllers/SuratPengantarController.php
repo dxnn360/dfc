@@ -152,7 +152,7 @@ class SuratPengantarController extends Controller
         $pdf = Pdf::loadView('analis.surat_pengantar.pdf', compact('header', 'body', 'footer'))
             ->setPaper('A4', 'portrait');
 
-        return $pdf->download("Surat_Pengantar_{$surat_pengantar->tanggal}.pdf");
+        return $pdf->download("002_SURAT PENGANTAR LAPORAN_{$surat_pengantar->tanggal}.pdf");
     }
 
 }

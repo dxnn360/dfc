@@ -160,6 +160,6 @@ class SuratTugasController extends Controller
             'footer' => $footer,
         ])->setPaper('A4', 'portrait');
 
-        return $pdf->download("Surat_Tugas_{$surat_tugas->tanggal}.pdf");
+        return $pdf->download("001_SURAT TUGAS AHLI DFC_{$surat_tugas->tanggal}.pdf");
     }
 }

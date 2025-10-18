@@ -144,7 +144,7 @@ class LaporanPenyelidikanController extends Controller
         $footer = str_replace(array_keys($replace), array_values($replace), $template->footer);
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('analis.laporan_penyelidikan.pdf', compact('header', 'body', 'footer'));
-        return $pdf->download("Laporan_Penyelidikan_{$laporan->tanggal}" . '.pdf');
+        return $pdf->download("003_LAPORAN PEMERIKSAAN FORENSIK_{$laporan->tanggal}" . '.pdf');
     }
 
     /**
