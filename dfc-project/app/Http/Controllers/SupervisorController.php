@@ -148,25 +148,44 @@ class SupervisorController extends Controller
         $footer = $template?->footer ?? '';
 
         // Fungsi untuk convert string/JSON/array ke <ul><li>…</li></ul>
-        $toHtmlList = function ($field) {
+        $toHtmlList = function ($field) use (&$toHtmlList) {
             if (!$field)
                 return '';
-            $arr = is_array($field) ? $field : json_decode($field, true);
-            if (!$arr || !is_array($arr))
-                return e($field); // jika string biasa
-            return '<ul><li>' . implode('</li><li>', array_map('e', $arr)) . '</li></ul>';
+
+            // If it's not an array, try to decode JSON; if not JSON, treat as scalar string
+            if (!is_array($field)) {
+                $decoded = json_decode($field, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $field = $decoded;
+                } else {
+                    return e((string) $field); // jika string biasa
+                }
+            }
+
+            // Now $field is an array; build nested <ul> safely
+            $html = '<ul>';
+            foreach ($field as $item) {
+                if (is_array($item)) {
+                    $html .= '<li>' . $toHtmlList($item) . '</li>';
+                } else {
+                    $html .= '<li>' . e((string) $item) . '</li>';
+                }
+            }
+            $html .= '</ul>';
+            return $html;
         };
 
         $data = [
-            'informasi_pemeriksaan' => $toHtmlList($laporan->informasi_pemeriksaan),
+            'nomor_surat' => e($laporan->nomor_surat),
+            'info' => e($laporan->informasi_pemeriksaan),
             'tanggal' => \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y'),
             'nama_pemohon' => e($laporan->nama_pemohon),
             'jabatan_pemohon' => e($laporan->jabatan_pemohon),
             'barang_bukti' => $toHtmlList($laporan->barang_bukti),
-            'tujuan_pemeriksaan' => $toHtmlList($laporan->tujuan_pemeriksaan),
-            'metodologi' => $toHtmlList($laporan->metodologi),
+            'tujuan' => e($laporan->tujuan_pemeriksaan),
+            'metodologi' => e($laporan->metodologi),
             'sumber' => $toHtmlList($laporan->sumber),
-            'hasil_pemeriksaan' => e($laporan->hasil_pemeriksaan),
+            'hasil' => e($laporan->hasil_pemeriksaan),
             'kesimpulan' => e($laporan->kesimpulan),
         ];
 

@@ -12,13 +12,33 @@
             @if($surat->catatan_supervisor)
                 <p><strong>Catatan Supervisor:</strong> {{ $surat->catatan_supervisor }}</p>
             @endif
-
             <h3 class="mt-4 font-semibold">Barang Bukti</h3>
-            <ul class="list-disc ml-5">
-                @foreach(explode(',', $surat->barang_bukti) as $bb)
-                    <li>{{ $bb }}</li>
-                @endforeach
-            </ul>
+            <table class="w-full table-auto border border-gray-200 rounded">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-3 py-2 text-left text-sm font-medium border-b">No</th>
+                        <th class="px-3 py-2 text-left text-sm font-medium border-b">Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($surat->barang_bukti as $bb)
+                        <tr class="@if($loop->odd) bg-white @else bg-gray-50 @endif">
+                            <td class="px-3 py-2 text-sm border-b align-top">{{ $loop->iteration }}</td>
+                            <td class="px-3 py-2 text-sm border-b">
+                                @if(is_array($bb) || is_object($bb))
+                                    {{ is_object($bb) ? json_encode($bb) : implode(', ', (array) $bb) }}
+                                @else
+                                    {{ $bb }}
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="2" class="px-3 py-2 text-sm text-gray-500">Tidak ada barang bukti.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
 
             <!-- Approve / Reject -->
             <form action="{{ route('supervisor.surat-pengantar.approve', $surat->id) }}" method="POST" class="mt-6">
