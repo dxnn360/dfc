@@ -11,6 +11,10 @@ class LaporanPenyelidikan extends Model
     protected $fillable = [
         'user_id',
         'nomor_surat',
+        'pekerjaan',
+        'organisasi',
+        'sumber_permintaan',
+        'no_telp',
         'tanggal',
         'nama_pemohon',
         'jabatan_pemohon',

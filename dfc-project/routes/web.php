@@ -59,8 +59,8 @@ Route::prefix('analis')->name('analis.')->group(function () {
 
 Route::prefix('analis')->name('analis.')->group(function () {
     Route::resource('laporan', LaporanPenyelidikanController::class);
-    Route::get('laporan/{laporan}/download', [LaporanPenyelidikanController::class, 'download'])
-        ->name('laporan.download');
+    Route::get('laporan/{laporan}/download', [LaporanPenyelidikanController::class, 'downloadFullReport'])->name('laporan.download');
+    Route::post('laporan/upload-image', [LaporanPenyelidikanController::class, 'uploadImage'])->name('laporan.upload-image');
 });
 
 // Dashboard supervisor

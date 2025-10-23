@@ -11,16 +11,40 @@ class AnalisDashboardController extends Controller
 {
     public function index(){
         $userId = auth()->id();
-
-        $rejectedCount = Document::where('user_id', $userId)
+        
+        $STrejectedCount = SuratTugas::where('user_id', $userId)
             ->where('status', 'rejected')
             ->count();
-        $prosesCount = Document::where('user_id', $userId)
+        $STprosesCount = SuratTugas::where('user_id', $userId)
             ->where('status', 'pending')
             ->count();
-        $completedCount = Document::where('user_id', $userId)
+        $STcompletedCount = SuratTugas::where('user_id', $userId)
             ->where('status', 'approved')
             ->count();
+        
+        $SPrejectedCount = SuratPengantar::where('user_id', $userId)
+            ->where('status', 'rejected')
+            ->count();
+        $SPprosesCount = SuratPengantar::where('user_id', $userId)
+            ->where('status', 'pending')
+            ->count();
+        $SPcompletedCount = SuratPengantar::where('user_id', $userId)
+            ->where('status', 'approved')
+            ->count();
+        
+        $LPrejectedCount = LaporanPenyelidikan::where('user_id', $userId)
+            ->where('status', 'rejected')
+            ->count();
+        $LPprosesCount = LaporanPenyelidikan::where('user_id', $userId)
+            ->where('status', 'pending')
+            ->count();
+        $LPcompletedCount = LaporanPenyelidikan::where('user_id', $userId)
+            ->where('status', 'approved')
+            ->count();
+
+        $rejectedCount = $STrejectedCount + $SPrejectedCount + $LPrejectedCount;
+        $prosesCount = $STprosesCount + $SPprosesCount + $LPprosesCount;
+        $completedCount = $STcompletedCount + $SPcompletedCount + $LPcompletedCount;
         
         $suratTugas = SuratTugas::where('user_id', $userId)
             ->latest()
