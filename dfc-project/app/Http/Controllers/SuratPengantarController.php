@@ -11,6 +11,27 @@ use Carbon\Carbon;
 
 class SuratPengantarController extends Controller
 {
+    private function generateNomorSurat()
+    {
+        $last = SuratPengantar::orderBy('id', 'desc')->first();
+
+        // Ambil nomor urut, mulai dari 200 kalau belum ada record
+        $next = $last
+            ? intval(explode('/', $last->nomor_surat)[0]) + 1
+            : 200;
+
+        $bulan = Carbon::now()->format('n');
+        $bulanRomawi = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+
+        return sprintf(
+            "%03d/S.Peng/DFC/%s/%s", // %03d = pad 3 digit
+            $next,
+            $bulanRomawi[$bulan - 1],
+            Carbon::now()->format('Y')
+        );
+    }
+
+
     public function index()
     {
         $documents = SuratPengantar::latest()->get();
@@ -21,7 +42,7 @@ class SuratPengantarController extends Controller
     {
         $template = DocumentTemplate::where('type', 'surat_pengantar')->first();
         $last = SuratPengantar::latest()->first();
-        $nomorSurat = 'SP-' . str_pad(($last?->id ?? 0) + 1, 4, '0', STR_PAD_LEFT) . '/X/' . now()->year;
+        $nomorSurat = $this->generateNomorSurat();
 
         $klasifikasiOptions = ['Rahasia', 'Segera', 'Penting', 'Biasa'];
         $laporanList = LaporanPenyelidikan::get();

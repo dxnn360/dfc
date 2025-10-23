@@ -26,9 +26,26 @@ class LaporanPenyelidikanController extends Controller
     private function generateNomorSurat()
     {
         $last = LaporanPenyelidikan::orderBy('id', 'desc')->first();
-        $next = $last ? intval(explode('/', $last->nomor_surat)[0]) + 1 : 1;
-        return str_pad($next, 3, '0', STR_PAD_LEFT) . '/LAP/' . date('Y');
+
+        if ($last) {
+            // Ambil nomor urut dari string "BAP No. Lab DFC No XXX"
+            preg_match('/BAP No\. Lab DFC No (\d+)/', $last->nomor_surat, $matches);
+            $next = isset($matches[1]) ? intval($matches[1]) + 1 : 200;
+        } else {
+            $next = 200; // start dari 200 kalau belum ada record
+        }
+
+        $bulan = Carbon::now()->format('n');
+        $bulanRomawi = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+
+        return sprintf(
+            "BAP No. Lab DFC No %s/BB/DFC/%s/%s",
+            str_pad($next, 3, '0', STR_PAD_LEFT),
+            $bulanRomawi[$bulan - 1],
+            Carbon::now()->format('Y')
+        );
     }
+
 
     /**
      * Form create

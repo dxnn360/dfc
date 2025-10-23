@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SuratTugas;
 use App\Models\DocumentTemplate;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -20,6 +21,27 @@ class SuratTugasController extends Controller
         return view('analis.surat_tugas.index', compact('suratTugas'));
     }
 
+
+    private function generateNomorSurat()
+    {
+        $last = SuratTugas::orderBy('id', 'desc')->first();
+
+        // Ambil nomor urut, mulai dari 200 kalau belum ada record
+        $next = $last
+            ? intval(explode('/', $last->nomor_surat)[0]) + 1
+            : 200;
+
+        $bulan = Carbon::now()->format('n');
+        $bulanRomawi = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+
+        return sprintf(
+            "%03d/S.Tu/DFC/%s/%s", // %03d = pad 3 digit
+            $next,
+            $bulanRomawi[$bulan - 1],
+            Carbon::now()->format('Y')
+        );
+    }
+
     public function create()
     {
         $template = DocumentTemplate::where('type', 'surat_tugas')->first();
@@ -30,7 +52,7 @@ class SuratTugasController extends Controller
 
         $lastSurat = SuratTugas::orderBy('id', 'desc')->first();
         $nextNumber = $lastSurat ? $lastSurat->id + 1 : 1;
-        $nomorSurat = "ST-" . str_pad($nextNumber, 3, "0", STR_PAD_LEFT) . "/IX/" . date('Y');
+        $nomorSurat = $this->generateNomorSurat();
 
         return view('analis.surat_tugas.create', compact('template', 'users', 'nomorSurat'));
     }
