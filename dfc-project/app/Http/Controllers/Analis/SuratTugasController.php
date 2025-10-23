@@ -122,7 +122,7 @@ class SuratTugasController extends Controller
         $template = DocumentTemplate::where('type', 'surat_tugas')->first();
 
         $header = $template?->header ?? '';
-        $body   = $template?->body ?? '';
+        $body = $template?->body ?? '';
         $footer = $template?->footer ?? '';
 
         // tabel daftar ahli
@@ -132,8 +132,8 @@ class SuratTugasController extends Controller
 
         $data = [
             'tanggal' => \Carbon\Carbon::parse($surat_tugas->tanggal)->translatedFormat('d F Y'),
-            'sumber_permintaan' => $surat_tugas->sumber_permintaan,
-            'ringkasan_kasus' => $surat_tugas->ringkasan_kasus,
+            'sumber' => $surat_tugas->sumber_permintaan,
+            'ringkasan' => $surat_tugas->ringkasan_kasus,
             'nama_pemohon' => $surat_tugas->nama_pemohon,
             'nomor_surat' => $surat_tugas->nomor_surat,
             'daftar_ahli' => $ahliTable,
@@ -160,6 +160,51 @@ class SuratTugasController extends Controller
             'footer' => $footer,
         ])->setPaper('A4', 'portrait');
 
-        return $pdf->download("001_SURAT TUGAS AHLI DFC_{$surat_tugas->tanggal}.pdf");
+        return $pdf->stream("001_SURAT TUGAS AHLI DFC_{$surat_tugas->tanggal}.pdf");
     }
+
+    public function preview(SuratTugas $surat_tugas)
+    {
+        $template = DocumentTemplate::where('type', 'surat_tugas')->first();
+
+        $header = $template?->header ?? '';
+        $body = $template?->body ?? '';
+        $footer = $template?->footer ?? '';
+
+        $ahliTable = view('analis.surat_tugas.partials.ahli_table', [
+            'users' => $surat_tugas->users
+        ])->render();
+
+        $data = [
+            'tanggal' => \Carbon\Carbon::parse($surat_tugas->tanggal)->translatedFormat('d F Y'),
+            'sumber' => $surat_tugas->sumber_permintaan,
+            'ringkasan' => $surat_tugas->ringkasan_kasus,
+            'nama_pemohon' => $surat_tugas->nama_pemohon,
+            'nomor_surat' => $surat_tugas->nomor_surat,
+            'daftar_ahli' => $ahliTable,
+            'status' => $surat_tugas->status,
+            'catatan_supervisor' => $surat_tugas->catatan_supervisor ?? '-',
+        ];
+
+        foreach ($data as $key => $val) {
+            $regexCurly = "/{{\s*$key\s*}}/i";
+            $regexBracket = "/\[$key\]/i";
+            $header = preg_replace($regexCurly, $val, $header);
+            $header = preg_replace($regexBracket, $val, $header);
+
+            $body = preg_replace($regexCurly, $val, $body);
+            $body = preg_replace($regexBracket, $val, $body);
+
+            $footer = preg_replace($regexCurly, $val, $footer);
+            $footer = preg_replace($regexBracket, $val, $footer);
+        }
+
+        return view('analis.surat_tugas.preview_html', [
+            'header' => $header,
+            'body' => $body,
+            'footer' => $footer,
+            'surat_tugas' => $surat_tugas
+        ]);
+    }
+
 }

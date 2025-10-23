@@ -9,7 +9,8 @@
                         <p class="mt-2 text-gray-600">Isi form berikut untuk membuat surat pengantar baru</p>
                     </div>
                     <div class="mt-4 sm:mt-0">
-                        <div id="today" class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm border"></div>
+                        <div id="today" class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm border">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,15 +39,19 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
                                         <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal') }}"
-                                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors" required>
+                                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                            required>
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Klasifikasi</label>
-                                        <select name="klasifikasi" id="klasifikasi" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors" required>
+                                        <select name="klasifikasi" id="klasifikasi"
+                                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                            required>
                                             <option value="">-- Pilih Klasifikasi --</option>
                                             @foreach($klasifikasiOptions as $opt)
-                                                <option value="{{ $opt }}" @selected(old('klasifikasi') == $opt)>{{ $opt }}</option>
+                                                <option value="{{ $opt }}" @selected(old('klasifikasi') == $opt)>{{ $opt }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -63,16 +68,34 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Nama Pemohon</label>
-                                    <input type="text" name="nama_pemohon" id="nama_pemohon" value="{{ old('nama_pemohon') }}"
-                                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors" required>
+                                    <input type="text" name="nama_pemohon" id="nama_pemohon"
+                                        value="{{ old('nama_pemohon') }}"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                        required>
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jabatan Pemohon</label>
                                     <input type="text" name="jabatan_pemohon" id="jabatan_pemohon"
-                                        value="{{ old('jabatan_pemohon') }}" 
-                                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors" required>
+                                        value="{{ old('jabatan_pemohon') }}"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                        required>
                                 </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Sumber Permohonan</label>
+                                <input type="text" name="sumber_permohonan" id="sumber_permohonan"
+                                    value="{{ old('sumber_permohonan') }}"
+                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                    required>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
+                                <input type="text" name="alamat" id="alamat" value="{{ old('alamat') }}"
+                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                    required>
                             </div>
                         </div>
 
@@ -87,7 +110,8 @@
                                     <!-- First item: dropdown from laporanList -->
                                     <div class="flex gap-3 items-start">
                                         <select name="barang_bukti[]" id="barang_bukti_first"
-                                            class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors" required>
+                                            class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                            required>
                                             <option value="">-- Pilih dari Surat Laporan --</option>
                                             @foreach($laporanList as $laporan)
                                                 <option value="{{ $laporan->nomor_surat }}"
@@ -99,7 +123,8 @@
                                         <button type="button"
                                             class="px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors remove-bukti hidden">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
                                     </div>
@@ -114,7 +139,8 @@
                                                 <button type="button"
                                                     class="px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors remove-bukti">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 </button>
                                             </div>
@@ -122,10 +148,11 @@
                                     @endif
                                 </div>
 
-                                <button type="button" id="add-bukti" 
-                                        class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                                <button type="button" id="add-bukti"
+                                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
                                     </svg>
                                     Tambah Barang Bukti
                                 </button>
@@ -133,11 +160,12 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" 
-                                class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-4 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-4 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             <div class="flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                                 Simpan Surat Pengantar
                             </div>
@@ -150,38 +178,45 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 Preview Dokumen
                             </h2>
                             <div class="flex items-center gap-2 text-sm text-gray-500">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <span>Update Real-time</span>
                             </div>
                         </div>
-                        
+
                         <!-- Preview Container dengan scroll horizontal dan vertikal -->
-                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                        <div id="preview-container"
+                            class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
                             <div id="preview-area" class="p-4">
                                 <!-- Preview akan di-render di sini -->
                                 <div class="text-center text-gray-500 py-20" style="width: 210mm;">
-                                    <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                     <p>Preview akan muncul di sini</p>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Scroll Indicator -->
                         <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
                             <span>← Scroll untuk melihat seluruh dokumen →</span>
                             <span class="flex items-center gap-1">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                 </svg>
                                 Geser untuk melihat
                             </span>
@@ -208,7 +243,7 @@
             background: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             margin: 0 auto;
-            font-family: 'Times New Roman', serif;
+            font-family: 'Calibri', serif;
             font-size: 12pt;
             line-height: 1.6;
             overflow-wrap: break-word;
@@ -234,35 +269,51 @@
             flex: 1;
         }
 
-        .barang-bukti-table {
+        .preview-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 11pt;
-            table-layout: fixed;
-        }
-
-        .barang-bukti-table th,
-        .barang-bukti-table td {
+            margin: 10px 0 20px 0;
+            font-size: 10pt;
             border: 1px solid #000;
-            padding: 10px;
-            text-align: left;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
-        .barang-bukti-table th {
-            background-color: #f8f9fa;
+        .preview-table th,
+        .preview-table td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            vertical-align: middle;
+        }
+
+        .preview-table th {
+            background-color: #f2f2f2;
             font-weight: bold;
-        }
-
-        .barang-bukti-table .number-col {
-            width: 50px;
             text-align: center;
         }
 
-        .barang-bukti-table .bukti-col {
-            width: auto;
+        /* Supaya baris selang-seling agak beda */
+        .preview-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        /* Rata tengah otomatis untuk kolom kecil */
+        .preview-table td:nth-child(1),
+        .preview-table td:nth-child(3) {
+            text-align: center;
+        }
+
+        /* Hindari tabel terpotong saat print/pdf */
+        .preview-table,
+        .preview-table tr,
+        .preview-table td,
+        .preview-table th {
+            page-break-inside: avoid;
+        }
+
+        /* Biar tabelnya rapi di tengah halaman preview */
+        .table-wrapper {
+            width: 100%;
+            display: block;
+            overflow-x: auto;
         }
 
         /* Styling untuk scrollbar */
@@ -297,11 +348,11 @@
                 margin: 0;
                 page-break-after: always;
             }
-            
+
             .a4-page:last-child {
                 page-break-after: auto;
             }
-            
+
             .preview-content {
                 transform: none;
                 margin: 0;
@@ -314,7 +365,7 @@
             // Set today's date
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('tanggal').value = today;
-            
+
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const todayDisplay = new Date().toLocaleDateString('id-ID', options);
             document.getElementById('today').textContent = todayDisplay;
@@ -344,43 +395,53 @@
 
             function buildBarangBuktiTable() {
                 const inputs = document.querySelectorAll('[name="barang_bukti[]"]');
+                const sumberPermohonan = document.querySelector('[name="sumber_permohonan"]')?.value || '';
                 let hasValidItems = false;
-                
+
                 let table = `
-                    <table class="barang-bukti-table">
-                        <thead>
-                            <tr>
-                                <th class="number-col">No</th>
-                                <th class="bukti-col">Barang Bukti</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
+        <div class="table-wrapper">
+            <table class="preview-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">No</th>
+                        <th>Jenis yang dikirim</th>
+                        <th style="width: 130px;">Banyaknya</th>
+                        <th style="width: 250px;">Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
                 let counter = 1;
                 inputs.forEach(el => {
-                    const v = el.value || '';
-                    if (v.trim() !== '') {
+                    const v = el.value?.trim() || '';
+                    if (v !== '') {
+                        const safeValue = v.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const keterangan = `Dikirimkan kepada Kepala untuk dipergunakan seperlunya sesuai dengan <em>${sumberPermohonan || '-'}</em>`;
+
                         table += `
-                            <tr>
-                                <td class="number-col">${counter}</td>
-                                <td class="bukti-col">${v.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>
-                            </tr>
-                        `;
+                <tr>
+                    <td>${counter}</td>
+                    <td>${safeValue}</td>
+                    <td>Satu eksemplar</td>
+                    <td>${keterangan}</td>
+                </tr>
+            `;
                         counter++;
                         hasValidItems = true;
                     }
                 });
-                
+
                 table += `
-                        </tbody>
-                    </table>
-                `;
-                
+                </tbody>
+            </table>
+        </div>
+    `;
+
                 if (!hasValidItems) {
                     return '<p style="text-align: center;">Tidak ada barang bukti</p>';
                 }
-                
+
                 return table;
             }
 
@@ -396,6 +457,8 @@
                     jabatan_pemohon: document.getElementById('jabatan_pemohon')?.value || '',
                     klasifikasi: document.getElementById('klasifikasi')?.value || '',
                     barang_bukti: buildBarangBuktiTable(),
+                    sumber_permohonan: document.getElementById('sumber_permohonan')?.value || '',
+                    alamat: document.getElementById('alamat')?.value || '',
                 };
 
                 // Replace semua placeholder
@@ -422,7 +485,7 @@
             }
 
             // Event listeners untuk semua input
-            const formElements = ['nomor_surat', 'tanggal', 'nama_pemohon', 'jabatan_pemohon', 'klasifikasi'];
+            const formElements = ['nomor_surat', 'tanggal', 'nama_pemohon', 'jabatan_pemohon', 'klasifikasi', 'sumber_permohonan', 'alamat'];
             formElements.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -433,13 +496,13 @@
 
             const buktiSection = document.getElementById('barang-bukti-section');
             if (buktiSection) {
-                buktiSection.addEventListener('input', function(e) {
+                buktiSection.addEventListener('input', function (e) {
                     if (e.target.matches('[name="barang_bukti[]"]')) {
                         updatePreview();
                     }
                 });
-                
-                buktiSection.addEventListener('change', function(e) {
+
+                buktiSection.addEventListener('change', function (e) {
                     if (e.target.matches('[name="barang_bukti[]"]')) {
                         updatePreview();
                     }
@@ -478,7 +541,7 @@
             // Show remove button for the first item if it has a value
             const firstBuktiInput = document.getElementById('barang_bukti_first');
             if (firstBuktiInput) {
-                firstBuktiInput.addEventListener('change', function() {
+                firstBuktiInput.addEventListener('change', function () {
                     const firstRemoveBtn = this.nextElementSibling;
                     if (firstRemoveBtn && this.value) {
                         firstRemoveBtn.classList.remove('hidden');
@@ -487,7 +550,7 @@
                     }
                     updatePreview();
                 });
-                
+
                 // Trigger initial state
                 if (firstBuktiInput.value) {
                     const firstRemoveBtn = firstBuktiInput.nextElementSibling;

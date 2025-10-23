@@ -21,6 +21,7 @@ class TemplateController extends Controller
             'surat_tugas' => [
                 '{{daftar_ahli}}' => 'Nama Ahli',
                 '{{nomor_surat}}' => 'Nomor Surat',
+                '{{nama_pemohon}}' => 'Nama Pemohon',
                 '{{tanggal}}' => 'Tanggal',
                 '{{sumber}}' => 'Sumber Permintaan',
                 '{{ringkasan}}' => 'Ringkasan Kasus',
@@ -32,6 +33,8 @@ class TemplateController extends Controller
                 '{{jabatan_pemohon}}' => 'Jabatan Pemohon',
                 '{{klasifikasi}}' => 'Klasifikasi Surat',
                 '{{barang_bukti}}' => 'Barang Bukti',
+                '{{sumber_permohonan}}' => 'Sumber Permohonan',
+                '{{alamat}}' => 'Alamat Pemohon',
             ],
             'laporan_penyelidikan' => [
                 '{{info}}' => 'Informasi Pemeriksaan',

@@ -38,6 +38,8 @@ class SuratPengantarController extends Controller
             'jabatan_pemohon' => 'required|string',
             'klasifikasi' => 'required|string',
             'barang_bukti' => 'required|array|min:1',
+            'sumber_permohonan' => 'required|string',
+            'alamat' => 'required|string',
         ]);
 
         $validated['user_id'] = auth()->id();
@@ -69,6 +71,8 @@ class SuratPengantarController extends Controller
             'barang_bukti' => 'required|array|min:1',
             'status' => 'in:draft,pending,approved,rejected',
             'catatan_supervisor' => 'nullable|string',
+            'sumber_permohonan' => 'required|string',
+            'alamat' => 'required|string',
         ]);
 
         $validated['barang_bukti'] = $request->barang_bukti;
@@ -92,11 +96,11 @@ class SuratPengantarController extends Controller
         $body = $template?->body ?? '';
         $footer = $template?->footer ?? '';
 
-        // Handle barang bukti
+        // === HANDLE BARANG BUKTI (4 KOLOM) ===
         $barangBuktiList = '';
         $items = $surat_pengantar->barang_bukti;
 
-        // Jika barang_bukti masih string, coba decode
+        // Decode jika masih string JSON
         if (is_string($items)) {
             $decoded = json_decode($items, true);
             if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
@@ -106,53 +110,68 @@ class SuratPengantarController extends Controller
             }
         }
 
-        // Jika array, buat tabel
-        if (is_array($items)) {
-            $barangBuktiList = "<table border='1' cellspacing='0' cellpadding='5' style='width:100%; border-collapse:collapse; font-size:12pt;'>
+        // Buat tabel hanya kalau ada data
+        if (!empty($items) && is_array($items)) {
+            $barangBuktiList = "
+        <table class='preview-table' style='width:100%; border-collapse:collapse; font-size:11pt;'>
             <thead>
                 <tr>
-                    <th style='width:50px; text-align:center;'>No</th>
-                    <th>Barang Bukti</th>
+                    <th style='width:40px; text-align:center;'>No</th>
+                    <th style='text-align:left;'>Jenis yang dikirim</th>
+                    <th style='width:120px; text-align:center;'>Banyaknya</th>
+                    <th style='text-align:left;'>Keterangan</th>
                 </tr>
             </thead>
             <tbody>";
 
             foreach ($items as $i => $bb) {
-                $barangBuktiList .= "<tr>
-                <td style='text-align:center;'>" . ($i + 1) . "</td>
-                <td>" . e($bb) . "</td>
-            </tr>";
+                // Jika setiap item adalah string biasa
+                $barangBuktiList .= "
+                <tr>
+                    <td style='text-align:center; vertical-align:middle;'>" . ($i + 1) . "</td>
+                    <td style='vertical-align:middle; word-wrap:break-word;'>" . e($bb) . "</td>
+                    <td style='text-align:center; vertical-align:middle;'>Satu eksemplar</td>
+                    <td style='vertical-align:middle; word-wrap:break-word;'>
+                        Dikirimkan Kepada Kepala untuk dipergunakan seperlunya sesuai dengan " . e($surat_pengantar->sumber_permohonan) . ".
+                    </td>
+                </tr>";
             }
 
             $barangBuktiList .= "</tbody></table>";
+        } else {
+            $barangBuktiList = "<p><em>Tidak ada barang bukti yang tercantum.</em></p>";
         }
 
+        // === REPLACE VARIABEL DALAM TEMPLATE ===
         $data = [
             'nomor_surat' => $surat_pengantar->nomor_surat,
-            'tanggal' => Carbon::parse($surat_pengantar->tanggal)->translatedFormat('d F Y'),
+            'tanggal' => \Carbon\Carbon::parse($surat_pengantar->tanggal)->translatedFormat('d F Y'),
             'nama_pemohon' => $surat_pengantar->nama_pemohon,
             'jabatan_pemohon' => $surat_pengantar->jabatan_pemohon,
             'klasifikasi' => $surat_pengantar->klasifikasi,
             'barang_bukti' => $barangBuktiList,
-            'status' => ucfirst($surat_pengantar->status ?? 'pending'),
+            'sumber_permohonan' => $surat_pengantar->sumber_permohonan,
+            'alamat' => $surat_pengantar->alamat,
+            'status' => ucfirst($surat_pengantar->status ?? 'Pending'),
             'catatan' => $surat_pengantar->catatan_supervisor ?? '-',
         ];
 
         foreach ($data as $key => $val) {
-            $regexCurly = "/{{\s*$key\s*}}/i";
-            $regexBracket = "/\[$key\]/i";
-            $header = preg_replace($regexCurly, $val, $header);
-            $header = preg_replace($regexBracket, $val, $header);
-            $body = preg_replace($regexCurly, $val, $body);
-            $body = preg_replace($regexBracket, $val, $body);
-            $footer = preg_replace($regexCurly, $val, $footer);
-            $footer = preg_replace($regexBracket, $val, $footer);
+            $patterns = [
+                "/{{\s*$key\s*}}/i",
+                "/\[$key\]/i",
+            ];
+            $header = preg_replace($patterns, $val, $header);
+            $body = preg_replace($patterns, $val, $body);
+            $footer = preg_replace($patterns, $val, $footer);
         }
 
-        $pdf = Pdf::loadView('analis.surat_pengantar.pdf', compact('header', 'body', 'footer'))
+        // === GENERATE PDF ===
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('analis.surat_pengantar.pdf', compact('header', 'body', 'footer'))
             ->setPaper('A4', 'portrait');
 
-        return $pdf->download("002_SURAT PENGANTAR LAPORAN_{$surat_pengantar->tanggal}.pdf");
+        return $pdf->stream("SURAT_PENGANTAR_{$surat_pengantar->tanggal}.pdf");
     }
+
 
 }

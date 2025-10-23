@@ -16,6 +16,8 @@ class SuratPengantar extends Model
         'jabatan_pemohon',
         'klasifikasi',
         'barang_bukti',
+        'sumber_permohonan',
+        'alamat',
         'status',
         'catatan_supervisor',
         'user_id',

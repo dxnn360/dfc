@@ -38,13 +38,15 @@
                                         multiple required>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}" data-nama="{{ $user->name }}"
-                                                data-nik="{{ $user->nik ?? '-' }}" data-position="{{ $user->position ?? '-' }}"
+                                                data-nik="{{ $user->nik ?? '-' }}"
+                                                data-position="{{ $user->position ?? '-' }}"
                                                 data-desc="{{ $user->desc ?? '-' }}">
                                                 {{ $user->name }} ({{ $user->position ?? 'Tanpa Jabatan' }})
                                             </option>
                                         @endforeach
                                     </select>
-                                    <p class="text-xs text-gray-500 mt-1">Gunakan Ctrl/Cmd + klik untuk memilih multiple</p>
+                                    <p class="text-xs text-gray-500 mt-1">Gunakan Ctrl/Cmd + klik untuk memilih multiple
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -58,8 +60,10 @@
                             <div class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Surat</label>
-                                    <input type="text" id="nomor_surat" name="nomor_surat" value="{{ $nomorSurat ?? '' }}"
-                                        class="w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 focus:outline-none" readonly>
+                                    <input type="text" id="nomor_surat" name="nomor_surat"
+                                        value="{{ $nomorSurat ?? '' }}"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 focus:outline-none"
+                                        readonly>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -70,7 +74,8 @@
                                             required>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Sumber Permintaan</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Sumber
+                                            Permintaan</label>
                                         <input type="text" id="sumber_permintaan" name="sumber_permintaan"
                                             value="{{ old('sumber_permintaan') }}"
                                             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
@@ -96,7 +101,8 @@
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Nama Pemohon</label>
-                                    <input type="text" id="nama_pemohon" name="nama_pemohon" value="{{ old('nama_pemohon') }}"
+                                    <input type="text" id="nama_pemohon" name="nama_pemohon"
+                                        value="{{ old('nama_pemohon') }}"
                                         class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
                                         required>
                                 </div>
@@ -105,17 +111,19 @@
 
                         <!-- Action Buttons -->
                         <div class="flex flex-col justify-center w-full sm:flex-row gap-4 pt-4">
-                            <a href="{{ route('analis.document') }}" 
-                               class="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors">
+                            <a href="{{ route('analis.document') }}"
+                                class="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                 </svg>
                                 Kembali
                             </a>
-                            <button type="submit" 
-                                    class="flex items-center w-full justify-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            <button type="submit"
+                                class="flex items-center w-full justify-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                                 Simpan Surat Tugas
                             </button>
@@ -128,26 +136,32 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 Preview Surat Tugas
                             </h2>
                             <div class="flex items-center gap-2 text-sm text-gray-500">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <span>A4 Ratio (210mm × 297mm)</span>
                             </div>
                         </div>
-                        
+
                         <!-- Preview Container dengan Scroll Horizontal dan Vertikal -->
-                        <div id="preview-container" class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
+                        <div id="preview-container"
+                            class="border-2 border-gray-200 rounded-lg bg-gray-50 overflow-auto">
                             <div id="preview-area" class="preview-content min-h-[800px] p-4">
                                 <!-- Preview akan di-render di sini -->
                                 <div class="text-center text-gray-500">
-                                    <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                     <p>Preview akan muncul di sini</p>
                                 </div>
@@ -175,7 +189,7 @@
             background: white;
             margin: 0 auto;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-            font-family: 'Times New Roman', serif;
+            font-family: 'Calibri', serif;
             font-size: 12pt;
             line-height: 1.6;
             overflow-wrap: break-word;
@@ -187,10 +201,16 @@
 
         /* Styling untuk bagian-bagian surat */
         .a4-header {
-            margin-bottom: 15mm;
             text-align: center;
-            border-bottom: 2px solid #000;
             padding-bottom: 5mm;
+        }
+
+        .a4-header img,
+        .a4-footer img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            margin: 0 auto;
         }
 
         .a4-body {
@@ -202,7 +222,6 @@
         .a4-footer {
             margin-top: 15mm;
             text-align: center;
-            border-top: 1px solid #000;
             padding-top: 5mm;
             font-size: 10pt;
         }
@@ -264,11 +283,11 @@
                 margin: 0;
                 page-break-after: always;
             }
-            
+
             .a4-page:last-child {
                 page-break-after: auto;
             }
-            
+
             .preview-content {
                 transform: none;
                 margin: 0;
@@ -308,7 +327,7 @@
             function buildAhliTable() {
                 const ahliSelect = document.getElementById('ahli');
                 const selectedOptions = Array.from(ahliSelect.selectedOptions);
-                
+
                 if (selectedOptions.length === 0) {
                     return '<p style="text-align: center; font-style: italic; color: #666;">Belum ada ahli dipilih</p>';
                 }
@@ -325,7 +344,7 @@
                         </thead>
                         <tbody>
                 `;
-                
+
                 selectedOptions.forEach(option => {
                     table += `
                         <tr>
@@ -336,12 +355,12 @@
                         </tr>
                     `;
                 });
-                
+
                 table += `
                         </tbody>
                     </table>
                 `;
-                
+
                 return table;
             }
 
@@ -353,8 +372,8 @@
                 const data = {
                     nomor_surat: document.getElementById('nomor_surat')?.value || 'NOMOR/BELUM/TERISI',
                     tanggal: formatDateToLong(document.getElementById('tanggal')?.value) || '',
-                    sumber_permintaan: document.getElementById('sumber_permintaan')?.value || '',
-                    ringkasan_kasus: document.getElementById('ringkasan_kasus')?.value || '',
+                    sumber: document.getElementById('sumber_permintaan')?.value || '',
+                    ringkasan: document.getElementById('ringkasan_kasus')?.value || '',
                     nama_pemohon: document.getElementById('nama_pemohon')?.value || '',
                     daftar_ahli: buildAhliTable(),
                 };

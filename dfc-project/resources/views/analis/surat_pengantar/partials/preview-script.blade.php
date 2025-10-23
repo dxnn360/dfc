@@ -12,7 +12,7 @@
         margin: 0 auto;
         background: white;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        font-family: 'Times New Roman', serif;
+        font-family: 'Calibri', serif;
         font-size: 12pt;
         line-height: 1.5;
     }

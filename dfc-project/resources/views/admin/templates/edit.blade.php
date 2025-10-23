@@ -368,7 +368,7 @@
             background: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             margin: 0 auto;
-            font-family: 'Times New Roman', serif;
+            font-family: 'Calibri', serif;
             font-size: 12pt;
             line-height: 1.6;
             padding: 25mm;
@@ -376,7 +376,6 @@
 
         .preview-header {
             margin-bottom: 20px;
-            border-bottom: 2px solid #000;
             padding-bottom: 10px;
         }
 
@@ -387,7 +386,6 @@
 
         .preview-footer {
             margin-top: 20px;
-            border-top: 1px solid #000;
             padding-top: 10px;
             text-align: center;
             font-size: 10pt;

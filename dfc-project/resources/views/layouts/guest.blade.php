@@ -28,13 +28,12 @@
             
             <div class="relative z-10">
                 <div class="flex items-center space-x-2 mb-8">
-                    <div class="w-10 h-10 bg-neutral-900 rounded-lg flex items-center justify-center">
-                        <span class="text-white text-lg font-bold">D</span>
+                    <div class="w-10 h-10 white rounded-lg flex items-center justify-center">
+                        <img class="w-50 h-full" src="images\headerdfc.png"></img>
                     </div>
-                    <span class="text-neutral-900 text-xl font-semibold">DFC UMP</span>
+                    <span class="text-blue-400 text-xl font-semibold">DFC UMP</span>
                 </div>
-                <h2 class="text-3xl font-bold text-neutral-900 mb-4">Digital Forensics Center</h2>
-                <p class="text-neutral-600 text-sm leading-relaxed">Secure access to advanced digital forensics tools and case management systems.</p>
+                <h2 class="text-3xl font-bold text-blue-400 mb-4">Digital Forensics Center</h2>
             </div>
 
             <div class="relative z-10 flex items-center justify-center">

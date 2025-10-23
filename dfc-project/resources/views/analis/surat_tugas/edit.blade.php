@@ -200,7 +200,7 @@
             background: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             margin: 0 auto;
-            font-family: 'Times New Roman', serif;
+            font-family: 'Calibri', serif;
             font-size: 12pt;
             line-height: 1.6;
             overflow-wrap: break-word;
