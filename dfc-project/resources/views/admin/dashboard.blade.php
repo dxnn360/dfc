@@ -64,7 +64,7 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow duration-300">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-3xl font-bold text-slate-900 mb-2">50</p>
+                            <p class="text-3xl font-bold text-slate-900 mb-2">{{{ $totalUsers }}}</p>
                             <h3 class="text-lg font-semibold text-slate-700">Pengguna</h3>
                             <p class="text-sm text-slate-500 mt-1">Total pengguna terdaftar</p>
                         </div>

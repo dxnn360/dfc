@@ -7,7 +7,11 @@ use App\Models\DocumentTemplate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Pharaonic\Hijri\HijriCarbon;
 use Str;
+
+Carbon::mixin(HijriCarbon::class);
 
 class LaporanPenyelidikanController extends Controller
 {
@@ -75,6 +79,7 @@ class LaporanPenyelidikanController extends Controller
             'organisasi' => $request->organisasi,
             'sumber_permintaan' => $request->sumber_permintaan,
             'no_telp' => $request->no_telp,
+            'status_barang_bukti' => $request->status_barang_bukti,
             'informasi_pemeriksaan' => $request->informasi_pemeriksaan,
             'barang_bukti' => $request->barang_bukti, // array
             'tujuan_pemeriksaan' => $request->tujuan_pemeriksaan,
@@ -87,10 +92,10 @@ class LaporanPenyelidikanController extends Controller
             'hasil_pemeriksaan' => $request->hasil_pemeriksaan,
             'kesimpulan' => $request->kesimpulan,
             'catatan_supervisor' => null,
-            'status' => 'draft',
+            'status' => 'pending',
         ]);
 
-        return redirect()->route('analis.laporan.edit', $laporan->id)
+        return redirect()->route('analis.document')
             ->with('success', 'Laporan berhasil disimpan sebagai draft.');
     }
 
@@ -114,6 +119,7 @@ class LaporanPenyelidikanController extends Controller
             'jabatan_pemohon' => $request->jabatan_pemohon,
             'pekerjaan' => $request->pekerjaan,
             'organisasi' => $request->organisasi,
+            'status_barang_bukti' => $request->status_barang_bukti,
             'sumber_permintaan' => $request->sumber_permintaan,
             'no_telp' => $request->no_telp,
             'informasi_pemeriksaan' => $request->informasi_pemeriksaan,
@@ -150,8 +156,8 @@ class LaporanPenyelidikanController extends Controller
      */
     public function downloadFullReport(LaporanPenyelidikan $laporan)
     {
-        $bulan = \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('F');
-        $tahun = \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('Y');
+        $bulan = Carbon::parse($laporan->tanggal)->translatedFormat('F');
+        $tahun = Carbon::parse($laporan->tanggal)->translatedFormat('Y');
 
         $template = DocumentTemplate::where('type', 'laporan_penyelidikan')->firstOrFail();
 
@@ -176,6 +182,7 @@ class LaporanPenyelidikanController extends Controller
         $replace = [
             '{{nomor_surat}}' => $laporan->nomor_surat,
             '{{tanggal}}' => \Carbon\Carbon::parse($laporan->tanggal)->locale('id')->translatedFormat('d F Y'),
+            '{{tanggal_hijriyah}}' => \Carbon\Carbon::parse($laporan->tanggal)->toHijri()->isoFormat('DD MMMM YYYY'),
             '{{nama_pemohon}}' => $laporan->nama_pemohon,
             '{{jabatan_pemohon}}' => $laporan->jabatan_pemohon,
             '{{sumber_permintaan}}' => $laporan->sumber_permintaan,

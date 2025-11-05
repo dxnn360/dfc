@@ -47,7 +47,7 @@ Route::prefix('analis')->middleware(['auth','role:analis'])->group(function () {
 Route::prefix('analis')->name('analis.')->group(function () {
     Route::resource('surat_tugas', SuratTugasController::class)->parameters(['surat_tugas' => 'surat_tugas']);
     Route::get('surat_tugas/{surat_tugas}/download', [SuratTugasController::class, 'download'])->name('surat_tugas.download');
-    Route::get('surat_tugas/{surat_tugas}/preview-html', [SuratTugasController::class, 'preview'])->name('analis.surat_tugas.preview');
+    Route::get('surat_tugas/{surat_tugas}/preview-html', [SuratTugasController::class, 'preview'])->name('surat_tugas.preview');
 
 });
 

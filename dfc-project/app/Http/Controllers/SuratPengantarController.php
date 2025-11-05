@@ -8,6 +8,9 @@ use App\Models\LaporanPenyelidikan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Pharaonic\Hijri\HijriCarbon;
+
+Carbon::mixin(HijriCarbon::class);
 
 class SuratPengantarController extends Controller
 {
@@ -166,7 +169,8 @@ class SuratPengantarController extends Controller
         // === REPLACE VARIABEL DALAM TEMPLATE ===
         $data = [
             'nomor_surat' => $surat_pengantar->nomor_surat,
-            'tanggal' => \Carbon\Carbon::parse($surat_pengantar->tanggal)->translatedFormat('d F Y'),
+            'tanggal' => Carbon::parse($surat_pengantar->tanggal)->translatedFormat('d F Y'),
+            'tanggal_hijriyah' => Carbon::parse($surat_pengantar->tanggal)->toHijri()->isoFormat('DD MMMM YYYY'),
             'nama_pemohon' => $surat_pengantar->nama_pemohon,
             'jabatan_pemohon' => $surat_pengantar->jabatan_pemohon,
             'klasifikasi' => $surat_pengantar->klasifikasi,

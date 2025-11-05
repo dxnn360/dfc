@@ -46,7 +46,7 @@
                                     @elseif($surat_tugas->status === 'disetujui')
                                         <span class="px-3 py-1 rounded-full bg-green-500 text-white text-xs">Disetujui</span>
                                     @else
-                                        <span class="px-3 py-1 rounded-full bg-red-500 text-white text-xs">Ditolak</span>
+                                        <span class="px-3 py-1 rounded-full bg-red-500 text-white text-xs">Revisi</span>
                                     @endif
                                 </td>
                                 <td class="p-3 border flex gap-2">

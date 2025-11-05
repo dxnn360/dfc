@@ -13,6 +13,8 @@ class AdminDashboardController extends Controller
 
         $templates = DocumentTemplate::all()->keyBy('type');
 
+        $totalUsers = User::count();
+
         $query = User::with('roles');
 
         if ($request->has('search') && $request->search != '') {
@@ -25,6 +27,6 @@ class AdminDashboardController extends Controller
 
         $users = $query->paginate(10);
 
-        return view('admin.dashboard', compact('users', 'templates'));
+        return view('admin.dashboard', compact('users', 'templates', 'totalUsers'));
     }
 }

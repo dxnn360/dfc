@@ -5,8 +5,8 @@
             <div class="mb-8">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard Supervisor</h1>
-                        <p class="mt-2 text-gray-600">Kelola dan tinjau dokumen yang memerlukan persetujuan</p>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Halaman Kelola Berkas Analis</h1>
+                        <p class="mt-2 text-gray-600">Anda bisa mengelola semua dokumen anda di halaman ini</p>
                     </div>
                     <div class="mt-4 sm:mt-0">
                         <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm border">

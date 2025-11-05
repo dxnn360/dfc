@@ -20,6 +20,7 @@ class TemplateController extends Controller
         $placeholders = match ($type) {
             'surat_tugas' => [
                 '{{daftar_ahli}}' => 'Nama Ahli',
+                '{{tanggal_hijriyah}}' => 'Tanggal Hijriyah',
                 '{{nomor_surat}}' => 'Nomor Surat',
                 '{{nama_pemohon}}' => 'Nama Pemohon',
                 '{{tanggal}}' => 'Tanggal',
@@ -28,6 +29,7 @@ class TemplateController extends Controller
             ],
             'surat_pengantar' => [
                 '{{nomor_surat}}' => 'Nomor Surat Pemeriksaan',
+                '{{tanggal_hijriyah}}' => 'Tanggal Hijriyah',
                 '{{tanggal}}' => 'Tanggal',
                 '{{nama_pemohon}}' => 'Nama Pemohon',
                 '{{jabatan_pemohon}}' => 'Jabatan Pemohon',
@@ -38,6 +40,7 @@ class TemplateController extends Controller
             ],
             'laporan_penyelidikan' => [
                 '{{info}}' => 'Informasi Pemeriksaan',
+                '{{tanggal_hijriyah}}' => 'Tanggal Hijriyah',
                 '{{nama_pemohon}}' => 'Nama Pemohon',
                 '{{jabatan_pemohon}}' => 'Unit Kerja Pemohon',
                 '{{barang_bukti}}' => 'Barang Bukti',

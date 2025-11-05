@@ -28,7 +28,7 @@
                             @elseif($laporan->status == 'rejected')
                                 <span
                                     class="px-3 py-1 bg-red-100 text-red-700 text-sm font-medium rounded-full border border-red-300">
-                                    ✗ Ditolak
+                                    ✗ Revisi
                                 </span>
                             @endif
                         </div>
@@ -60,7 +60,7 @@
                         <div class="flex-1">
                             <p class="text-sm font-medium text-blue-800">
                                 Laporan ini berstatus
-                                <strong>{{ $laporan->status == 'draft' ? 'Draft' : 'Ditolak' }}</strong>
+                                <strong>{{ $laporan->status == 'draft' ? 'Draft' : 'Revisi' }}</strong>
                             </p>
                             <p class="text-sm text-blue-700 mt-1">
                                 Anda dapat mengedit laporan dan mengajukan review ke supervisor untuk disetujui.
@@ -202,6 +202,26 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <!-- Status Barang Bukti Card -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <div class="w-2 h-6 bg-yellow-600 rounded-full"></div>
+                                Status Barang Bukti
+                            </h3>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Status Barang
+                                    Bukti</label>
+                                <select name="status_barang_bukti" id="status_barang_bukti"
+                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+                                    {{ $laporan->status == 'pending' || $laporan->status == 'approved' ? 'disabled' : '' }}>
+                                    <option value="">Pilih Status</option>
+                                    <option value="Sudah Diterima" {{ $laporan->status_barang_bukti == 'Sudah Diterima' ? 'selected' : '' }}>Sudah Diterima</option>
+                                    <option value="Belum Dikirimkan" {{ $laporan->status_barang_bukti == 'Belum Dikirimkan' ? 'selected' : '' }}>Belum Dikirimkan</option>
+                                    <option value="Dikembalikan" {{ $laporan->status_barang_bukti == 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                                </select>
                             </div>
                         </div>
 
@@ -735,6 +755,29 @@
 
                 return 'Metodologi belum dipilih';
             }
+
+            function HideElementOnCondition() {
+                const status = $('#status_barang_bukti').val();
+
+                if (status === 'Belum Dikirimkan' || status === '') {
+                    $('#evidence-card').addClass('hidden');
+                    $('#sumber-section').addClass('hidden');
+                } else {
+                    $('#evidence-card').removeClass('hidden');
+                    $('#sumber-section').removeClass('hidden');
+                }
+            }
+
+
+            // Call the hide/show behaviour on load
+            HideElementOnCondition();
+
+            // Trigger hide/show when dropdown changes
+            $('#status_barang_bukti').on('change', function () {
+                HideElementOnCondition();
+                updatePreview();
+            });
+
 
             function updatePreview() {
                 let header = TEMPLATE.header;

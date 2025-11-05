@@ -223,7 +223,7 @@ class SupervisorController extends Controller
     {
         $surat = SuratTugas::findOrFail($id);
         $surat->update(['status' => 'rejected', 'catatan_supervisor' => $request->catatan_supervisor]);
-        return back()->with('success', 'Surat Tugas ditolak');
+        return back()->with('success', 'Surat Tugas di revisi');
     }
 
     public function approveSuratPengantar($id)
@@ -237,7 +237,7 @@ class SupervisorController extends Controller
     {
         $surat = SuratPengantar::findOrFail($id);
         $surat->update(['status' => 'rejected', 'catatan_supervisor' => $request->catatan_supervisor]);
-        return back()->with('success', 'Surat Pengantar ditolak');
+        return back()->with('success', 'Surat Pengantar direvisi');
     }
 
     public function approveLaporan($id)
@@ -251,6 +251,6 @@ class SupervisorController extends Controller
     {
         $laporan = LaporanPenyelidikan::findOrFail($id);
         $laporan->update(['status' => 'rejected', 'catatan_supervisor' => $request->catatan_supervisor]);
-        return back()->with('success', 'Laporan ditolak');
+        return back()->with('success', 'Laporan di revisi');
     }
 }

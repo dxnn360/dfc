@@ -9,6 +9,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Pharaonic\Hijri\HijriCarbon;
+
+Carbon::mixin(HijriCarbon::class);
 
 class SuratTugasController extends Controller
 {
@@ -153,7 +156,8 @@ class SuratTugasController extends Controller
         ])->render();
 
         $data = [
-            'tanggal' => \Carbon\Carbon::parse($surat_tugas->tanggal)->translatedFormat('d F Y'),
+            'tanggal' => Carbon::parse($surat_tugas->tanggal)->translatedFormat('d F Y'),
+            'tanggal_hijriyah' => Carbon::parse($surat_tugas->tanggal)->toHijri()->isoFormat('DD MMMM YYYY'),
             'sumber' => $surat_tugas->sumber_permintaan,
             'ringkasan' => $surat_tugas->ringkasan_kasus,
             'nama_pemohon' => $surat_tugas->nama_pemohon,
@@ -198,7 +202,7 @@ class SuratTugasController extends Controller
         ])->render();
 
         $data = [
-            'tanggal' => \Carbon\Carbon::parse($surat_tugas->tanggal)->translatedFormat('d F Y'),
+            'tanggal' => Carbon::parse($surat_tugas->tanggal)->translatedFormat('d F Y'),
             'sumber' => $surat_tugas->sumber_permintaan,
             'ringkasan' => $surat_tugas->ringkasan_kasus,
             'nama_pemohon' => $surat_tugas->nama_pemohon,

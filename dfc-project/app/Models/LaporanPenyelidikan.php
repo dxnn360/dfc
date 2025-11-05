@@ -14,6 +14,7 @@ class LaporanPenyelidikan extends Model
         'pekerjaan',
         'organisasi',
         'sumber_permintaan',
+        'status_barang_bukti',
         'no_telp',
         'tanggal',
         'nama_pemohon',
