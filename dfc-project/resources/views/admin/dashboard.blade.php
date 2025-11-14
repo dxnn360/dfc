@@ -83,10 +83,10 @@
                 <!-- Add User Card -->
                 <div class="bg-white rounded-2xl shadow-sm border-2 border-dashed border-slate-300 p-6 hover:border-blue-500 hover:shadow-md transition-all duration-300 cursor-pointer group">
                     <div class="flex items-center justify-between">
-                        <div>
+                        <a href="{{ route('users.create') }}">
                             <h3 class="text-lg font-semibold text-slate-700 group-hover:text-blue-600 transition-colors">Tambah Pengguna</h3>
                             <p class="text-sm text-slate-500 mt-1">Registrasi pengguna baru</p>
-                        </div>
+                        </a>
                         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                             <span class="text-2xl group-hover:scale-110 transition-transform">➕</span>
                         </div>

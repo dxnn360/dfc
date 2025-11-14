@@ -226,7 +226,7 @@
                         </div>
 
                         <!-- Evidence Card -->
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hidden">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                 <div class="w-2 h-6 bg-purple-600 rounded-full"></div>
                                 Barang Bukti
@@ -332,18 +332,37 @@
                                     </button>
                                 </div>
 
-                                <div class="flex pt-2">
-                                    <button type="submit" name="status" value="pending"
-                                        class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                                        <div class="flex items-center justify-center gap-2">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            Ajukan untuk Review
-                                        </div>
-                                    </button>
-                                </div>
+                                @if($laporan->status_barang_bukti === 'Belum Dikirimkan' || $laporan->status_barang_bukti === '')
+                                    <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                                        <p class="text-red-700 text-sm font-medium">⚠️ Barang bukti belum dikirimkan</p>
+                                        <p class="text-red-600 text-xs mt-1">Silakan perbarui status barang bukti sebelum mengajukan review</p>
+                                    </div>
+                                    <div class="flex pt-2">
+                                        <button type="submit" name="status" value="pending" disabled
+                                            class="flex-1 bg-gray-400 text-white font-semibold py-3 px-6 rounded-xl cursor-not-allowed opacity-60">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Ajukan untuk Review
+                                            </div>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="flex pt-2">
+                                        <button type="submit" name="status" value="pending"
+                                            class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Ajukan untuk Review
+                                            </div>
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
                         @elseif($laporan->status == 'pending')
                             <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
@@ -795,7 +814,8 @@
                     metodologi: $('#metodologi').val().trim() || 'Metodologi belum ditentukan',
                     sumber: buildSumberTable(),
                     hasil: $('#hasil_pemeriksaan').summernote('code') || 'Belum diisi',
-                    kesimpulan: $('#kesimpulan').summernote('code') || 'Belum diisi'
+                    kesimpulan: $('#kesimpulan').summernote('code') || 'Belum diisi',
+                    sumber_permintaan: $('#sumber_permintaan').val() || 'Sumber permintaan belum diisi',
                 };
 
                 Object.keys(data).forEach(key => {

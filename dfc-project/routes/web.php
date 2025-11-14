@@ -58,9 +58,12 @@ Route::prefix('analis')->name('analis.')->group(function () {
 });
 
 Route::prefix('analis')->name('analis.')->group(function () {
-    Route::resource('laporan', LaporanPenyelidikanController::class);
+    Route::resource('laporan', LaporanPenyelidikanController::class)->except(['show']);;
     Route::get('laporan/{laporan}/download', [LaporanPenyelidikanController::class, 'downloadFullReport'])->name('laporan.download');
     Route::post('laporan/upload-image', [LaporanPenyelidikanController::class, 'uploadImage'])->name('laporan.upload-image');
+    Route::put('laporan/upload-barang-bukti/{laporan}', [LaporanPenyelidikanController::class, 'uploadBarangBukti'])->name('laporan.upload-barang-bukti');
+    Route::get('laporan/upload-barang-bukti/{laporan}', [LaporanPenyelidikanController::class, 'formUploadBarangBukti'])->name('laporan.show-upload-barang-bukti-form');
+    Route::get('laporan/view-barang-bukti', [LaporanPenyelidikanController::class, 'viewBarangBukti'])->name('laporan.view-barang-bukti');
 });
 
 // Dashboard supervisor

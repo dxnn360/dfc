@@ -79,9 +79,9 @@ class LaporanPenyelidikanController extends Controller
             'organisasi' => $request->organisasi,
             'sumber_permintaan' => $request->sumber_permintaan,
             'no_telp' => $request->no_telp,
-            'status_barang_bukti' => $request->status_barang_bukti,
+            'status_barang_bukti' => $request->status_barang_bukti ?? 'Belum Dikirimkan',
             'informasi_pemeriksaan' => $request->informasi_pemeriksaan,
-            'barang_bukti' => $request->barang_bukti, // array
+            'barang_bukti' => $request->barang_bukti ?? '', // array
             'tujuan_pemeriksaan' => $request->tujuan_pemeriksaan,
             'metodologi' => $request->metodologi,
             'sumber' => collect($request->jenis_sumber)
@@ -92,7 +92,7 @@ class LaporanPenyelidikanController extends Controller
             'hasil_pemeriksaan' => $request->hasil_pemeriksaan,
             'kesimpulan' => $request->kesimpulan,
             'catatan_supervisor' => null,
-            'status' => 'pending',
+            'status' => 'draft',
         ]);
 
         return redirect()->route('analis.document')
@@ -260,6 +260,27 @@ class LaporanPenyelidikanController extends Controller
 
         // Kembalikan URL supaya Summernote bisa insert ke editor
         return response()->json(['url' => asset('storage/' . $path)]);
+    }
+
+    public function uploadBarangBukti(Request $request, LaporanPenyelidikan $laporan)
+    {
+        $laporan->update([
+            'barang_bukti' => $request->barang_bukti ?? '',
+            'status_barang_bukti' => $request->status_barang_bukti,
+        ]);
+        return redirect()->route('analis.laporan.view-barang-bukti')->with('success', 'Barang bukti berhasil diperbarui.');
+    }
+
+    public function formUploadBarangBukti(LaporanPenyelidikan $laporan)
+    {
+        return view('analis.laporan_penyelidikan.upload_barang_bukti', compact('laporan'));
+    }
+
+
+    public function viewBarangBukti()
+    {
+        $laporan = LaporanPenyelidikan::orderBy('created_at', 'desc')->get();
+        return view('analis.laporan_penyelidikan.view_barang_bukti', compact('laporan'));
     }
 
 }
