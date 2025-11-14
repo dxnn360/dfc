@@ -156,7 +156,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
-                                    <input type="text" name="no_telp" id="no_telp" value="{{ $laporan->no_telp }}"
+                                    <input type="number" name="no_telp" id="no_telp" value="{{ $laporan->no_telp }}"
                                         class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
                                         {{ $laporan->status == 'pending' || $laporan->status == 'approved' ? 'disabled' : '' }}>
                                 </div>
